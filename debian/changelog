@@ -1,0 +1,5 @@
+raspberrypi-sys-mods (20131021) jessie; urgency=low
+
+  * Initial release
+
+ -- Serge Schneider <serge@raspberrypi.org>  Wed, 21 Oct 2015 13:54:43 +0100
