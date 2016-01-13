@@ -1,0 +1,48 @@
+set -e
+
+check_audio () {
+  # audio dtparam mentioned in config.txt (enabled, disabled or commented out)
+  AM_PAT="^[[:space:]]*#?[[:space:]]*(device_tree_param|dtparam)[[:space:]]*=[[:space:]]*([^,]*,)*audio[[:space:]]*=.*$"
+  # snd_bcm2835 module enabled pattern
+  SND_PAT="^[[:space:]]*snd(_|-)bcm2835[[:space:]]*$"
+
+  if grep -q -E "$AM_PAT" /boot/config.txt; then
+    return 0;
+  fi
+
+  if grep -q -E "$SND_PAT" /etc/modules; then
+    echo "Enabling audio in config.txt and removing from /etc/modules..."
+    echo "\n# Enable audio (added by raspberrypi-sys-mods)" >> /boot/config.txt
+    echo "dtparam=audio=on" >> /boot/config.txt
+    MODBAK=/etc/modules.ui-mods.bak
+    grep -v -E "$SND_PAT" /etc/modules > ${MODBAK}
+    mv ${MODBAK} /etc/modules
+  else
+    echo "Disabling audio in config.txt..."
+    echo "\n# Disable audio (added by raspberrypi-sys-mods)" >> /boot/config.txt
+    echo "dtparam=audio=no" >> /boot/config.txt
+  fi
+}
+
+case "${1}" in
+  configure)
+    if dpkg --compare-versions "${2}" lt "20160112"; then
+      check_audio
+    fi
+    if dpkg --compare-versions "${2}" lt-nl "20160112"; then
+      echo "Fixing ping capabilities..."
+      setcap cap_net_raw+ep /bin/ping
+    fi
+    ;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+
+    ;;
+
+  *)
+    echo "postinst called with unknown argument \`${1}'" >&2
+    exit 1
+    ;;
+esac
+
+#DEBHELPER#

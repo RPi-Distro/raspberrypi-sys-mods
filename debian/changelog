@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20160112) jessie; urgency=medium
+
+  * Added the custom udev rules
+  * Ensure audio is enabled when upgrading from an earlier version
+  * Fix ping capabilities (no longer require root access)
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 12 Jan 2016 13:52:34 +0000
+
 raspberrypi-sys-mods (20131021) jessie; urgency=low
 
   * Initial release
