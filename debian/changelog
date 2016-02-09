@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20160113) jessie; urgency=medium
+
+  * Fix capabilities for all files. Fail gracefully if unable.
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 09 Feb 2016 11:49:44 +0000
+
 raspberrypi-sys-mods (20160112) jessie; urgency=medium
 
   * Added the custom udev rules

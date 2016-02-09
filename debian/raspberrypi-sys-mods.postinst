@@ -29,9 +29,11 @@ case "${1}" in
     if dpkg --compare-versions "${2}" lt "20160112"; then
       check_audio
     fi
-    if dpkg --compare-versions "${2}" lt-nl "20160112"; then
-      echo "Fixing ping capabilities..."
-      setcap cap_net_raw+ep /bin/ping
+    if dpkg --compare-versions "${2}" lt-nl "20160213"; then
+      echo "Fixing file capabilities..."
+      setcap -v cap_net_raw+ep /bin/ping6 || true
+      setcap -v cap_net_raw+ep /bin/ping || true
+      setcap -v cap_dac_override,cap_sys_ptrace+ep /usr/bin/systemd-detect-virt || true
     fi
     ;;
 
