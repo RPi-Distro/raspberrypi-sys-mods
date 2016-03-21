@@ -1,3 +1,13 @@
+raspberrypi-sys-mods (20160321) jessie; urgency=medium
+
+  * Udev rule
+    - Use $devpath
+    - Add serial0 and serial1 symlinks
+  * Replace ttyAMA0 with serial0 and ttyS0 with serial1 in cmdline.txt
+  * Add NEWS file explaining above changes
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 21 Mar 2016 13:35:45 +0000
+
 raspberrypi-sys-mods (20160113) jessie; urgency=medium
 
   * Fix capabilities for all files. Fail gracefully if unable.

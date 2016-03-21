@@ -1,0 +1,15 @@
+raspberrypi-sys-mods (20160321) jessie; urgency=medium
+
+  * This update replaces ttyAMA0 and ttyS0 with serial0 and serial1 in /boot/cmdline.txt
+  * On the Rapeberry Pi 3, ttyAMA0 is used to communicate with Bluetooth chip.
+    In order to support using the same SD card across all models of the Raspberry Pi, some changes have been made:
+    - Device tree aliases have been added for the 'free'/console and bluetooth serial devices (serial0 and serial1, respecitvely)
+    - The firmare reads cmdline.txt and replaces instances of serial0 and serial1 accordingly
+    - When running on a Pi 3, the firmware replaces ttyAMA0 with ttyS0 in cmdline.txt. This may be removed in the future.
+    - A udev rules has been added to 99-com.rules which creates /dev/serial0 and /dev/serial1 symlinks
+    If you have any custom changes relating to serial, it is worth rebooting and checking that /proc/cmdline contains what you expect
+  * Raspberry Pi 3 serial console does not use correct baudrate
+    See https://github.com/raspberrypi/firmware/issues/553 and https://github.com/RPi-Distro/repo/issues/22
+    - Current workarounds are adding force_turbo=1, gpu_freq=300, or core_freq=250 to /boot/config.txt
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 21 Mar 2016 13:35:45 +0000

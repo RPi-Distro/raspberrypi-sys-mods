@@ -35,6 +35,10 @@ case "${1}" in
       setcap -v cap_net_raw+ep /bin/ping || true
       setcap -v cap_dac_override,cap_sys_ptrace+ep /usr/bin/systemd-detect-virt || true
     fi
+    if dpkg --compare-versions "${2}" lt-nl "20160321"; then
+      echo "Adjusting cmdline.txt..."
+      sed -e "s|=ttyAMA0|=serial0|;s|=ttyS0|=serial1|;" -i /boot/cmdline.txt || echo "Failed"
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
