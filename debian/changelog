@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20160321+1) jessie; urgency=medium
+
+  * Actually fix capabilities instead of just verifying them
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 21 Mar 2016 20:35:16 +0000
+
 raspberrypi-sys-mods (20160321) jessie; urgency=medium
 
   * Udev rule
