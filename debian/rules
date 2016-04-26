@@ -19,7 +19,7 @@ include /usr/share/dpkg/default.mk
 
 # main packaging script based on dh7 syntax
 %:
-	dh $@ 
+	dh $@ --with systemd
 
 # debmake generated override targets
 # This is example for Cmake (See http://bugs.debian.org/641051 )
@@ -28,5 +28,11 @@ include /usr/share/dpkg/default.mk
 #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 
 
+override_dh_installinit:
+	dh_installinit --name=rpi-display-backlight
 
+override_dh_systemd_enable:
+	dh_systemd_enable --name=rpi-display-backlight
 
+override_h_systemd_start:
+	dh_systemd_start --name=rpi-display-backlight

@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20160426) jessie; urgency=medium
+
+  * Add service to turn off official screen backlight
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 26 Apr 2016 12:21:38 +0100
+
 raspberrypi-sys-mods (20160321+1) jessie; urgency=medium
 
   * Actually fix capabilities instead of just verifying them
