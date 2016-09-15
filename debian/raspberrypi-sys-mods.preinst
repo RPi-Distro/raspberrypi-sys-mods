@@ -1,0 +1,28 @@
+set -e
+
+case "${1}" in
+  install|upgrade)
+    if dpkg --compare-versions "${2}" lt-nl "20160915" && [ -f /etc/sysctl.d/98-rpi.conf ]; then
+      if [ "$(md5sum /etc/sysctl.d/98-rpi.conf | cut -f1 -d" ")" = "69873a82479534ccfb0f2f05f6693439" ]; then
+        echo "Removing old /etc/sysctl.d/98-rpi.conf..."
+        rm -f /etc/sysctl.d/98-rpi.conf
+        echo "Adjusting vm.swappiness and vm.min_free_kbytes..."
+	echo 60 > /proc/sys/vm/swappiness
+        echo 16384 > /proc/sys/vm/min_free_kbytes
+      else
+        echo "Detected modified /etc/sysctl.d/98-rpi.conf. Leaving unchanged."
+     fi
+    fi
+    ;;
+
+  abort-upgrade)
+
+    ;;
+
+  *)
+    echo "preinst called with unknown argument \`${1}'" >&2
+    exit 1
+    ;;
+esac
+
+#DEBHELPER#

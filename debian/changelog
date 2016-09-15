@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20160915) jessie; urgency=medium
+
+  * Add /etc/sysctl.d/98-rpi.conf
+
+ -- Serge Schneider <serge@raspberrypi.org>  Thu, 15 Sep 2016 04:42:08 +0000
+
 raspberrypi-sys-mods (20160426) jessie; urgency=medium
 
   * Add service to turn off official screen backlight
