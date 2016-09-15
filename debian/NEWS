@@ -1,7 +1,7 @@
 raspberrypi-sys-mods (20160321) jessie; urgency=medium
 
   * This update replaces ttyAMA0 and ttyS0 with serial0 and serial1 in /boot/cmdline.txt
-  * On the Rapeberry Pi 3, ttyAMA0 is used to communicate with Bluetooth chip.
+  * On the Raspberry Pi 3, ttyAMA0 is used to communicate with Bluetooth chip.
     In order to support using the same SD card across all models of the Raspberry Pi, some changes have been made:
     - Device tree aliases have been added for the 'free'/console and bluetooth serial devices (serial0 and serial1, respecitvely)
     - The firmare reads cmdline.txt and replaces instances of serial0 and serial1 accordingly
