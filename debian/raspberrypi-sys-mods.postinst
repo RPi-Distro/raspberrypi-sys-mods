@@ -39,6 +39,10 @@ case "${1}" in
       echo "Adjusting cmdline.txt..."
       sed -e "s|=ttyAMA0|=serial0|;s|=ttyS0|=serial1|;" -i /boot/cmdline.txt || echo "Failed"
     fi
+    if dpkg --compare-versions "${2}" lt-nl "20160916"; then
+      echo "Removing old sysctl tweaks if present..."
+      sed -n '1h;1!H;${;g;s/\n\# rpi tweaks\nvm\.swappiness=1\nvm\.min_free_kbytes = 8192//g;p;}' -i /etc/sysctl.d/99-sysctl.conf
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)

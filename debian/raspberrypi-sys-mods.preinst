@@ -7,7 +7,7 @@ case "${1}" in
         echo "Removing old /etc/sysctl.d/98-rpi.conf..."
         rm -f /etc/sysctl.d/98-rpi.conf
         echo "Adjusting vm.swappiness and vm.min_free_kbytes..."
-	echo 60 > /proc/sys/vm/swappiness
+        echo 60 > /proc/sys/vm/swappiness
         echo 16384 > /proc/sys/vm/min_free_kbytes
       else
         echo "Detected modified /etc/sysctl.d/98-rpi.conf. Leaving unchanged."

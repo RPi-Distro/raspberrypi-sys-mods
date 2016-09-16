@@ -1,3 +1,13 @@
+raspberrypi-sys-mods (20160916) jessie; urgency=medium
+
+  * Fix bug in 98-rpi.conf
+  * Remove pre-jessie sysctl tweaks
+  * Improve I2C subsystem module loading
+    - (https://www.raspberrypi.org/forums/viewtopic.php?p=1037943#p1037943)
+  * Change package architecture from any to all
+
+ -- Serge Schneider <serge@raspberrypi.org>  Fri, 16 Sep 2016 23:40:45 +1000
+
 raspberrypi-sys-mods (20160915) jessie; urgency=medium
 
   * Add /etc/sysctl.d/98-rpi.conf

@@ -1,0 +1,1 @@
+SUBSYSTEM=="i2c", ENV{MODALIAS}=="?*", ENV{OF_NAME}=="?*", ENV{OF_COMPATIBLE_0}=="?*", RUN+="/usr/lib/raspberrypi-sys-mods/i2cprobe"
