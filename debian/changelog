@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20161010) jessie; urgency=medium
+
+  * Mods to rfkill to ensure Bluetooth status is retained after reboot
+
+ -- Simon Long <simon@raspberrypiorg>  Mon, 10 Oct 2016 12:04:24 +0100
+
 raspberrypi-sys-mods (20160916) jessie; urgency=medium
 
   * Fix bug in 98-rpi.conf

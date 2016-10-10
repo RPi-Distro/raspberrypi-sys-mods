@@ -1,0 +1,2 @@
+# /lib/udev/rules.d/15-rfkill.rules
+SUBSYSTEM=="rfkill", ACTION=="change", RUN+="/usr/lib/raspberrypi-sys-mods/rfkill-persist"
