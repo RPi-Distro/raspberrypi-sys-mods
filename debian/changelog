@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20161018+1) jessie; urgency=medium
+
+  * Add /etc/sudoers.d/010_pi-nopasswd
+  * Change architecture to all
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 18 Oct 2016 16:29:14 +0100
+
 raspberrypi-sys-mods (20161010) jessie; urgency=medium
 
   * Mods to rfkill to ensure Bluetooth status is retained after reboot

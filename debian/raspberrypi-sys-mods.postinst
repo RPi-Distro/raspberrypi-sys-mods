@@ -29,19 +29,22 @@ case "${1}" in
     if dpkg --compare-versions "${2}" lt "20160112"; then
       check_audio
     fi
-    if dpkg --compare-versions "${2}" lt-nl "20160321+1"; then
+    if dpkg --compare-versions "${2}" lt "20160321+1"; then
       echo "Fixing file capabilities..."
       setcap cap_net_raw+ep /bin/ping6 || true
       setcap cap_net_raw+ep /bin/ping || true
       setcap cap_dac_override,cap_sys_ptrace+ep /usr/bin/systemd-detect-virt || true
     fi
-    if dpkg --compare-versions "${2}" lt-nl "20160321"; then
+    if dpkg --compare-versions "${2}" lt "20160321"; then
       echo "Adjusting cmdline.txt..."
       sed -e "s|=ttyAMA0|=serial0|;s|=ttyS0|=serial1|;" -i /boot/cmdline.txt || echo "Failed"
     fi
     if dpkg --compare-versions "${2}" lt-nl "20160916"; then
       echo "Removing old sysctl tweaks if present..."
       sed -n '1h;1!H;${;g;s/\n\# rpi tweaks\nvm\.swappiness=1\nvm\.min_free_kbytes = 8192//g;p;}' -i /etc/sysctl.conf
+    if dpkg --compare-versions "${2}" lt "20161018"; then
+      echo "Removing old NOPASSWD line..."
+      sed '/pi ALL=(ALL) NOPASSWD: ALL/d' -i /etc/sudoers || echo "Failed"
     fi
     ;;
 
