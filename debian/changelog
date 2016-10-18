@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20161018+2) jessie; urgency=medium
+
+  * Fix postinst rebasing error
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 18 Oct 2016 19:01:23 +0100
+
 raspberrypi-sys-mods (20161018+1) jessie; urgency=medium
 
   * Add /etc/sudoers.d/010_pi-nopasswd

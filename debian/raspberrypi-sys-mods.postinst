@@ -42,6 +42,7 @@ case "${1}" in
     if dpkg --compare-versions "${2}" lt-nl "20160916"; then
       echo "Removing old sysctl tweaks if present..."
       sed -n '1h;1!H;${;g;s/\n\# rpi tweaks\nvm\.swappiness=1\nvm\.min_free_kbytes = 8192//g;p;}' -i /etc/sysctl.conf
+    fi
     if dpkg --compare-versions "${2}" lt "20161018"; then
       echo "Removing old NOPASSWD line..."
       sed '/pi ALL=(ALL) NOPASSWD: ALL/d' -i /etc/sudoers || echo "Failed"
