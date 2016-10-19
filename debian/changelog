@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20161018+3) jessie; urgency=medium
+
+  * See NEWS and https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/6
+
+ -- Serge Schneider <serge@raspberrypi.org>  Wed, 19 Oct 2016 12:05:09 +0100
+
 raspberrypi-sys-mods (20161018+2) jessie; urgency=medium
 
   * Fix postinst rebasing error

@@ -1,3 +1,15 @@
+raspberrypi-sys-mods (20161018+3) jessie; urgency=medium
+
+  * The 20161018 release has introduced a /etc/sudoers.d/010_pi-nopasswd file.
+    - The file is installed even if the "pi ALL=(ALL) NOPASSWD: ALL" entry has been
+      previously removed from /etc/sudoers by the user.
+    - If you do not want the entry to exist, please comment out or remove 010_pi-nopasswd.
+    - If upgrading to 20161018+3 from a version earlier than 20161018, the line in
+      010_pi-nopasswd is automatically commented out if the entry doesn't exist in sudoers.
+    - See https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/6
+
+ -- Serge Schneider <serge@raspberrypi.org>  Wed, 19 Oct 2016 10:52:07 +0100
+
 raspberrypi-sys-mods (20160321) jessie; urgency=medium
 
   * This update replaces ttyAMA0 and ttyS0 with serial0 and serial1 in /boot/cmdline.txt
