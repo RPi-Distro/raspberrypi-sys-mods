@@ -1,0 +1,12 @@
+[Unit]
+Description=Turn on SSH if /boot/ssh is present
+ConditionPathExists=/boot/ssh
+After=regenerate_ssh_host_keys.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "update-rc.d ssh enable && invoke-rc.d ssh start && rm -f /boot/ssh"
+
+[Install]
+WantedBy=multi-user.target
+
