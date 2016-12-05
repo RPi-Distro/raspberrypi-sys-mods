@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20161205) jessie; urgency=medium
+
+  * Improve robustness of password checks; do not generate hash unless SSH enabled
+
+ -- Simon Long <simon@raspberrypi.org>  Mon, 05 Dec 2016 13:31:29 +0000
+
 raspberrypi-sys-mods (20161124) jessie; urgency=medium
 
   * Add a login warning if SSH is enabled and the password is unchanged
