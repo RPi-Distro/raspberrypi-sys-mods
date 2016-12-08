@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20161208+1) jessie; urgency=medium
+
+  * Add ssh.txt as valid activation file for ssh
+
+ -- Simon Long <simon@raspberrypi.org>  Thu, 08 Dec 2016 13:32:30 +0000
+
 raspberrypi-sys-mods (20161208) jessie; urgency=medium
 
   * Explicit check for existence of pi user in ssh password check
