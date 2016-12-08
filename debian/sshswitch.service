@@ -5,7 +5,7 @@ After=regenerate_ssh_host_keys.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c "update-rc.d ssh enable && invoke-rc.d ssh start && rm -f /boot/ssh{,.txt}"
+ExecStart=/bin/sh -c "update-rc.d ssh enable && invoke-rc.d ssh start && rm -f /boot/ssh ; rm -f /boot/ssh.txt"
 
 [Install]
 WantedBy=multi-user.target
