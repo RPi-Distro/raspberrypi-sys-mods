@@ -29,13 +29,12 @@ include /usr/share/dpkg/default.mk
 
 
 override_dh_installinit:
-	dh_installinit --name=rpi-display-backlight
+	dh_installinit --name=rpi-display-backlight --no-restart-on-upgrade --no-start
 	dh_installinit --name=sshswitch
 
 override_dh_systemd_enable:
 	dh_systemd_enable --name=rpi-display-backlight
 	dh_systemd_enable --name=sshswitch
 
-override_h_systemd_start:
-	dh_systemd_start --name=rpi-display-backlight
-	dh_systemd_start --name=sshswitch
+override_dh_systemd_start:
+	dh_systemd_start --name=sshswitch --no-start

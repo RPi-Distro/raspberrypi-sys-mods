@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20161220) jessie; urgency=medium
+
+  * Don't restart rpi-display-backlight on upgrade
+  * Fix typo in debian/rules
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 20 Dec 2016 15:22:29 +0000
+
 raspberrypi-sys-mods (20161208+1) jessie; urgency=medium
 
   * Add ssh.txt as valid activation file for ssh
