@@ -7,6 +7,7 @@ check_hash ()
    test -n "${SHADOW}" || return 0
    if echo $SHADOW | grep -q "pi:!" ; then return 0 ; fi
    SALT=$(echo "${SHADOW}" | sed -n 's/pi:\$6\$//;s/\$.*//p')
+   test -n "${SALT}" || return 0
    HASH=$(mkpasswd -msha-512 raspberry "$SALT")
    test -n "${HASH}" || return 0
 
