@@ -18,7 +18,7 @@ check_hash ()
    fi
 }
 
-if service ssh status | grep -q running; then
+if /usr/sbin/service ssh status | grep -q running; then
 	check_hash
 fi
 unset check_hash
