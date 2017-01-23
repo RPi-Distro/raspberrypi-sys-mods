@@ -10,6 +10,10 @@ check_audio () {
     return 0;
   fi
 
+  if grep -q -E "^[[:space:]]*\[.*\]" /boot/config.txt; then
+    return 0;
+  fi
+
   if grep -q -E "$SND_PAT" /etc/modules; then
     echo "Enabling audio in config.txt and removing from /etc/modules..."
     echo "\n# Enable audio (added by raspberrypi-sys-mods)" >> /boot/config.txt
