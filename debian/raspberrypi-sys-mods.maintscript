@@ -1,0 +1,1 @@
+rm_conffile /etc/profile.d/sshpasswd.sh 20161220
