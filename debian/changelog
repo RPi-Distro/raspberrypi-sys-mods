@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20170127) jessie; urgency=medium
+
+  * check_audio: don't modify config.txt files with filters
+  * Remove sshpasswd.sh
+
+ -- Serge Schneider <serge@raspberrypi.org>  Fri, 27 Jan 2017 14:06:29 +0000
+
 raspberrypi-sys-mods (20161220) jessie; urgency=medium
 
   * Don't restart rpi-display-backlight on upgrade
