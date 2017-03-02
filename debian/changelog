@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20170302) jessie; urgency=medium
+
+  * Blacklist rtl8192cu and rtl8xxxu
+
+ -- Serge Schneider <serge@raspberrypi.org>  Thu, 02 Mar 2017 17:15:36 +0000
+
 raspberrypi-sys-mods (20170127) jessie; urgency=medium
 
   * check_audio: don't modify config.txt files with filters
