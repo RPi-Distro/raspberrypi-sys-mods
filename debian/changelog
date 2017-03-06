@@ -1,4 +1,4 @@
-raspberrypi-sys-mods (20170306) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20170306) jessie; urgency=medium
 
   * Add PARTUUID symlinks for DOS partitions
 
