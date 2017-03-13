@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20170313) jessie; urgency=medium
+
+  * Update config.txt documentation URL
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 13 Mar 2017 17:59:58 +0000
+
 raspberrypi-sys-mods (20170306) jessie; urgency=medium
 
   * Add PARTUUID symlinks for DOS partitions
