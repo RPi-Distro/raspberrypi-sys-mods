@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20170502) jessie; urgency=medium
+
+  * Remove wifi blacklists from i386 builds
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 02 May 2017 09:31:02 +0100
+
 raspberrypi-sys-mods (20170313) jessie; urgency=medium
 
   * Update config.txt documentation URL
