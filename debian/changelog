@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20170519) jessie; urgency=medium
+
+  * Remove whois dependency
+
+ -- Serge Schneider <serge@raspberrypi.org>  Fri, 19 May 2017 14:23:47 +0100
+
 raspberrypi-sys-mods (20170502) jessie; urgency=medium
 
   * Remove wifi blacklists from i386 builds
