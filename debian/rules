@@ -31,10 +31,16 @@ include /usr/share/dpkg/default.mk
 override_dh_installinit:
 	dh_installinit --name=rpi-display-backlight --no-restart-on-upgrade --no-start
 	dh_installinit --name=sshswitch
+	dh_installinit --name=apply_noobs_os_config --no-restart-on-upgrade --no-start
+	dh_installinit --name=regenerate_ssh_host_keys --no-restart-on-upgrade --no-start
 
 override_dh_systemd_enable:
 	dh_systemd_enable --name=rpi-display-backlight
 	dh_systemd_enable --name=sshswitch
+	dh_systemd_enable --name=apply_noobs_os_config --no-enable
+	dh_systemd_enable --name=regenerate_ssh_host_keys --no-enable
 
 override_dh_systemd_start:
 	dh_systemd_start --name=sshswitch --no-start
+	dh_systemd_start --name=apply_noobs_os_config --no-start
+	dh_systemd_start --name=regenerate_ssh_host_keys --no-start

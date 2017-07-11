@@ -1,0 +1,13 @@
+[Unit]
+Description=Apply NOOBS config
+ConditionPathExists=/boot/os_config.json
+Before=display-manager getty.target autologin@tty1.service
+
+[Service]
+Type=oneshot
+TimeoutSec=300
+ExecStart=/usr/bin/raspi-config --apply-os-config
+ExecStartPost=/bin/systemctl disable apply_noobs_os_config
+
+[Install]
+WantedBy=multi-user.target

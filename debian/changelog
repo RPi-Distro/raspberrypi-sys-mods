@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20170714) stretch; urgency=medium
+
+  * Add ssh host key regen and NOOBS config services
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 11 Jul 2017 16:18:47 +0100
+
 raspberrypi-sys-mods (20170519) jessie; urgency=medium
 
   * Remove whois dependency
