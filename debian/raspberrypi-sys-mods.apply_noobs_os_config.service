@@ -1,7 +1,7 @@
 [Unit]
 Description=Apply NOOBS config
 ConditionPathExists=/boot/os_config.json
-Before=display-manager getty.target autologin@tty1.service
+Before=display-manager.service getty.target autologin@tty1.service
 
 [Service]
 Type=oneshot

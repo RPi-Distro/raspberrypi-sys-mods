@@ -73,3 +73,12 @@ case "${1}" in
 esac
 
 #DEBHELPER#
+
+case "${1}" in
+  configure)
+    if dpkg --compare-versions "${2}" lt "20170717"; then
+      systemctl disable apply_noobs_os_config.service
+      systemctl disable regenerate_ssh_host_keys.service
+    fi
+    ;;
+esac

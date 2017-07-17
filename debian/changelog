@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20170717) stretch; urgency=medium
+
+  * Prevent debhelper from enabling ssh host key regen and NOOBS config scripts
+  * Fix NOOBS config service Before parameter
+  * Remove 61-partuuid.rules as an alternative is provided by systemd
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 17 Jul 2017 12:00:16 +0100
+
 raspberrypi-sys-mods (20170714) stretch; urgency=medium
 
   * Add ssh host key regen and NOOBS config services
