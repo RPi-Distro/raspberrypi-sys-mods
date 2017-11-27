@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20171127) stretch; urgency=medium
+
+  * Allow the default user to access the new gpio character device
+  * Extend of-compatible-based probing to spi
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 27 Nov 2017 13:54:20 +0000
+
 raspberrypi-sys-mods (20170717) stretch; urgency=medium
 
   * Prevent debhelper from enabling ssh host key regen and NOOBS config scripts
