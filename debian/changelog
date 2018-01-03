@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20180103) stretch; urgency=medium
+
+  * Remove rfkill persistence (handled by systemd)
+
+ -- Serge Schneider <serge@raspberrypi.org>  Wed, 03 Jan 2018 11:40:58 +0000
+
 raspberrypi-sys-mods (20171127) stretch; urgency=medium
 
   * Allow the default user to access the new gpio character device

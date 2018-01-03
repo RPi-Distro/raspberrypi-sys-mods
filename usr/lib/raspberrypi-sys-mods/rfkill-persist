@@ -1,3 +1,0 @@
-#!/bin/sh
-RFKID=`basename $DEVPATH`
-/lib/systemd/systemd-rfkill save $RFKID
