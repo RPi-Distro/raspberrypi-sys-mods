@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if ! /bin/grep -q '^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]0[dD][0-9a-fA-F]$' /proc/cpuinfo ; then
+	exit 0
+fi
+
+if /bin/grep -q "^country=[A-Z][A-Z]" /etc/wpa_supplicant/wpa_supplicant.conf; then
+	exit 0
+fi
+
+if [ ! -x "/usr/sbin/rfkill" ]; then
+	echo "rfkill not installed"
+	exit 1
+fi
+mkdir -p "/var/lib/systemd/rfkill"
+
+address="$(/bin/grep -m 1 /mmc /proc/iomem | /usr/bin/cut -f1 -d-)"
+if [ -z "$address" ]; then
+	echo "Could not determine WiFi iomem address"
+	exit 1
+fi
+persist_file="/var/lib/systemd/rfkill/platform-$address.mmc:wlan"
+
+/bin/echo 1 > "$persist_file"
+/usr/bin/touch /run/wifi-country-unset
+/bin/echo "Wi-Fi is disabled because the country is not set"

@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20180312) stretch; urgency=medium
+
+  * Add Wi-Fi country check
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 12 Mar 2018 07:44:06 +0000
+
 raspberrypi-sys-mods (20180103) stretch; urgency=medium
 
   * Remove rfkill persistence (handled by systemd)
