@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20180315) stretch; urgency=medium
+
+  * Run wifi-country.service after raspberrypi-net-mods.service
+
+ -- Serge Schneider <serge@raspberrypi.org>  Thu, 15 Mar 2018 15:02:29 +0000
+
 raspberrypi-sys-mods (20180312) stretch; urgency=medium
 
   * Add Wi-Fi country check

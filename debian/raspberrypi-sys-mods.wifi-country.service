@@ -1,6 +1,7 @@
 [Unit]
 Description=Disable WiFi if country not set
 Before=systemd-rfkill.service
+After=raspberrypi-net-mods.service
 
 [Service]
 Type=oneshot
