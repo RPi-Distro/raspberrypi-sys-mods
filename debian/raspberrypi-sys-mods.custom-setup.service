@@ -1,0 +1,13 @@
+[Unit]
+Description=Execute script if /boot/setup.sh is present
+ConditionPathExistsGlob=/boot/setup.sh
+After=multi-user.target  # Not sure which After= it should use... hrm...
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /boot/setup.sh
+ExecStartPost=/bin/rm -f /boot/setup.sh
+
+[Install]
+WantedBy=multi-user.target
+
