@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20180323) stretch; urgency=medium
+
+  * Add gettext-base dependency
+
+ -- Serge Schneider <serge@raspberrypi.org>  Fri, 23 Mar 2018 16:30:38 +0000
+
 raspberrypi-sys-mods (20180315) stretch; urgency=medium
 
   * Run wifi-country.service after raspberrypi-net-mods.service
