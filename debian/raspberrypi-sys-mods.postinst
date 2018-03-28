@@ -60,6 +60,10 @@ case "${1}" in
       echo "Updating documentation URL in /boot/config.txt..."
       sed -i 's|http://www.raspberrypi.org/documentation/configuration/config-txt.md|http://rpf.io/configtxtreadme|' /boot/config.txt || echo "Failed"
     fi
+    if dpkg --compare-versions "${2}" lt "20180328"; then
+      echo "Updating apt sources from mirrordirector.raspbian.org to raspbian.raspberrypi.org..."
+      find /etc/apt/sources.list* -type f -exec sed -i 's/mirrordirector\.raspbian\.org/raspbian.raspberrypi.org/g' {} \;
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)

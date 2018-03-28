@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20180328) stretch; urgency=medium
+
+  * sources.list: change mirrordirector.raspbian.org to raspbian.raspberrypi.org
+
+ -- Serge Schneider <serge@raspberrypi.org>  Wed, 28 Mar 2018 10:19:36 +0100
+
 raspberrypi-sys-mods (20180323) stretch; urgency=medium
 
   * Add gettext-base dependency
