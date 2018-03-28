@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20180328+1) stretch; urgency=medium
+
+  * sources.list: change archive.raspbian.org to raspbian.raspberrypi.org
+
+ -- Serge Schneider <serge@raspberrypi.org>  Wed, 28 Mar 2018 10:44:05 +0100
+
 raspberrypi-sys-mods (20180328) stretch; urgency=medium
 
   * sources.list: change mirrordirector.raspbian.org to raspbian.raspberrypi.org
