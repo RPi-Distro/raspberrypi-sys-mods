@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20181121) stretch; urgency=medium
+
+  * Add /etc/profile.d script to suppress a11y warnings
+
+ -- Simon Long <simon@raspberrypi.org>  Wed, 21 Nov 2018 09:35:19 +0000
+
 raspberrypi-sys-mods (20180328+1) stretch; urgency=medium
 
   * sources.list: change archive.raspbian.org to raspbian.raspberrypi.org
