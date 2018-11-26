@@ -1,3 +1,15 @@
+raspberrypi-sys-mods (20181127) stretch; urgency=medium
+
+  * Suppress dpkg error message for a11y script
+
+ -- Simon Long <simon@raspberrypi.org>  Mon, 26 Nov 2018 14:39:38 +0000
+
+raspberrypi-sys-mods (20181126) stretch; urgency=medium
+
+  * Use -q in grep in a11y warning script
+
+ -- Simon Long <simon@raspberrypi.org>  Mon, 26 Nov 2018 11:20:01 +0000
+
 raspberrypi-sys-mods (20181121) stretch; urgency=medium
 
   * Add /etc/profile.d script to suppress a11y warnings
