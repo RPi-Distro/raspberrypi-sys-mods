@@ -1,6 +1,7 @@
 [Unit]
 Description=Regenerate SSH host keys
 Before=ssh.service
+ConditionFileIsExecutable=/usr/bin/ssh-keygen
 
 [Service]
 Type=oneshot
