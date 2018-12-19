@@ -8,19 +8,6 @@ if /bin/grep -q "^country=[A-Z][A-Z]" /etc/wpa_supplicant/wpa_supplicant.conf; t
 	exit 0
 fi
 
-if [ ! -x "/usr/sbin/rfkill" ]; then
-	echo "rfkill not installed"
-	exit 1
-fi
-mkdir -p "/var/lib/systemd/rfkill"
-
-address="$(/bin/grep -m 1 @7e300000 /proc/iomem | /usr/bin/cut -f1 -d-)"
-if [ -z "$address" ]; then
-	echo "Could not determine WiFi iomem address"
-	exit 1
-fi
-persist_file="/var/lib/systemd/rfkill/platform-$address.mmc:wlan"
-
-/bin/echo 1 > "$persist_file"
+/usr/lib/raspberrypi-sys-mods/rfkill-wifi 1
 /usr/bin/touch /run/wifi-country-unset
 /bin/echo "Wi-Fi is disabled because the country is not set"
