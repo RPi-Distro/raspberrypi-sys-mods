@@ -14,7 +14,7 @@ if [ ! -x "/usr/sbin/rfkill" ]; then
 fi
 mkdir -p "/var/lib/systemd/rfkill"
 
-address="$(/bin/grep -m 1 /mmc /proc/iomem | /usr/bin/cut -f1 -d-)"
+address="$(/bin/grep -m 1 mmc@7e300000 /proc/iomem | /usr/bin/cut -f1 -d-)"
 if [ -z "$address" ]; then
 	echo "Could not determine WiFi iomem address"
 	exit 1
