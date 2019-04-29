@@ -7,6 +7,8 @@ raspberrypi-sys-mods (20190429) UNRELEASED; urgency=medium
       See the discussion in #27 for details.
   * Detect if openssh-client is installed before regenerating SSH host keys
   * wifi-country: Fix mmc block matching rule
+  * Add 80-noobs.rules which prevents the NOOBS SETTINGS partition from
+    auto-mounting or showing up on the desktop
 
  -- Serge Schneider <serge@raspberrypi.org>  Mon, 29 Apr 2019 10:54:23 +0100
 

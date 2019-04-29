@@ -1,0 +1,2 @@
+# NOOBS Settings partition
+ENV{ID_FS_TYPE}=="ext4", ENV{ID_FS_LABEL}=="SETTINGS", ENV{UDISKS_IGNORE}="1"
