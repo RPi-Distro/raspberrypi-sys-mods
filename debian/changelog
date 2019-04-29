@@ -8,6 +8,7 @@ raspberrypi-sys-mods (20190429) buster; urgency=medium
   * Add 80-noobs.rules which prevents the NOOBS SETTINGS partition from
     auto-mounting or showing up on the desktop
   * Match arm64 and armhf .install files
+  * Replace --no-restart-on-upgrade with --no-stop-on-upgrade
 
  -- Serge Schneider <serge@raspberrypi.org>  Mon, 29 Apr 2019 10:54:23 +0100
 
