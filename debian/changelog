@@ -1,12 +1,10 @@
-raspberrypi-sys-mods (20190429) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20190429) buster; urgency=medium
 
-  * Move rfkill logic into a dedicated script
-    - this permits the same logic to be used by raspberrypi-net-mods.service
-      to remove the persistent rfkill block when installing a new
-      wpa_supplicant.conf.
-      See the discussion in #27 for details.
+  * Remove WiFi handling
+    - Images generated going forward will ship with WiFi disabled by default.
+    - Instead of running a script to check whether WiFi should be blocked,
+      unblocking is handled by the GUI, raspi-config or the user.
   * Detect if openssh-client is installed before regenerating SSH host keys
-  * wifi-country: Fix mmc block matching rule
   * Add 80-noobs.rules which prevents the NOOBS SETTINGS partition from
     auto-mounting or showing up on the desktop
 

@@ -1,1 +1,2 @@
 rm_conffile /etc/profile.d/sshpasswd.sh 20161220
+rm_conffile /etc/profile.d/wifi-country.sh 20190429
