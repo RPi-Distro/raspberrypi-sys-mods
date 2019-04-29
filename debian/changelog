@@ -1,3 +1,15 @@
+raspberrypi-sys-mods (20190429) UNRELEASED; urgency=medium
+
+  * Move rfkill logic into a dedicated script
+    - this permits the same logic to be used by raspberrypi-net-mods.service
+      to remove the persistent rfkill block when installing a new
+      wpa_supplicant.conf.
+      See the discussion in #27 for details.
+  * Detect if openssh-client is installed before regenerating SSH host keys
+  * wifi-country: Fix mmc block matching rule
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 29 Apr 2019 10:54:23 +0100
+
 raspberrypi-sys-mods (20181127) stretch; urgency=medium
 
   * Suppress dpkg error message for a11y script
