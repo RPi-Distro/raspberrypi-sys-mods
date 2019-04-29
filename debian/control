@@ -2,8 +2,8 @@ Source: raspberrypi-sys-mods
 Section: admin
 Priority: optional
 Maintainer: Serge Schneider <serge@raspberrypi.org>
-Build-Depends: debhelper (>= 9), dh-systemd
-Standards-Version: 3.9.6
+Build-Depends: debhelper (>= 9.20160709)
+Standards-Version: 4.3.0
 Homepage: https://github.com/RPi-Distro/raspberrypi-sys-mods
 Vcs-Git: git://git@github.com:RPi-Distro/raspberrypi-sys-mods.git
 Vcs-Browser: https://github.com/RPi-Distro/raspberrypi-sys-mods

@@ -1,4 +1,4 @@
-set -e
+#!/bin/sh -e
 
 check_audio () {
   # audio dtparam mentioned in config.txt (enabled, disabled or commented out)
@@ -16,14 +16,14 @@ check_audio () {
 
   if grep -q -E "$SND_PAT" /etc/modules; then
     echo "Enabling audio in config.txt and removing from /etc/modules..."
-    echo "\n# Enable audio (added by raspberrypi-sys-mods)" >> /boot/config.txt
+    printf '\n# Enable audio (added by raspberrypi-sys-mods)\n' >> /boot/config.txt
     echo "dtparam=audio=on" >> /boot/config.txt
     MODBAK=/etc/modules.ui-mods.bak
     grep -v -E "$SND_PAT" /etc/modules > ${MODBAK}
     mv ${MODBAK} /etc/modules
   else
     echo "Disabling audio in config.txt..."
-    echo "\n# Disable audio (added by raspberrypi-sys-mods)" >> /boot/config.txt
+    printf '\n# Disable audio (added by raspberrypi-sys-mods)\n' >> /boot/config.txt
     echo "dtparam=audio=no" >> /boot/config.txt
   fi
 }
@@ -60,6 +60,10 @@ case "${1}" in
       echo "Updating documentation URL in /boot/config.txt..."
       sed -i 's|http://www.raspberrypi.org/documentation/configuration/config-txt.md|http://rpf.io/configtxtreadme|' /boot/config.txt || echo "Failed"
     fi
+    if dpkg --compare-versions "${2}" lt "20170717"; then
+      deb-systemd-invoke disable apply_noobs_os_config.service
+      deb-systemd-invoke disable regenerate_ssh_host_keys.service
+    fi
     if dpkg --compare-versions "${2}" lt "20180328+1"; then
       echo "Updating apt sources from {mirrordirector,archive}.raspbian.org to raspbian.raspberrypi.org..."
       find /etc/apt/sources.list* -type f -exec sed -i -E 's/(mirrordirector|archive)\.raspbian\.org/raspbian.raspberrypi.org/g' {} \;
@@ -77,12 +81,3 @@ case "${1}" in
 esac
 
 #DEBHELPER#
-
-case "${1}" in
-  configure)
-    if dpkg --compare-versions "${2}" lt "20170717"; then
-      systemctl disable apply_noobs_os_config.service
-      systemctl disable regenerate_ssh_host_keys.service
-    fi
-    ;;
-esac
