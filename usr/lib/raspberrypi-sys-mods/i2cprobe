@@ -1,2 +1,6 @@
 #!/bin/sh
-modprobe ${MODALIAS} || modprobe "of:N${OF_NAME}T<NULL>C${OF_COMPATIBLE_0}"
+ALIASES=/lib/modules/`uname -r`/modules.alias
+if grep -q "alias ${SUBSYSTEM}:${OF_NAME} " $ALIASES; then
+    modprobe "${SUBSYSTEM}:${OF_NAME}" && exit 0
+fi
+modprobe "${MODALIAS}" || modprobe "of:N${OF_NAME}T<NULL>C${OF_COMPATIBLE_0}"
