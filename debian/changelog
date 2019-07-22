@@ -2,6 +2,7 @@ raspberrypi-sys-mods (20190722) buster; urgency=medium
 
   * Use systemctl to enable/start ssh service
   * Allow video group access to argon-* subsystems
+  * i2cprobe: Fix loading of I2C modules without DT aliases
 
  -- Serge Schneider <serge@raspberrypi.org>  Mon, 22 Jul 2019 10:08:53 +0100
 
