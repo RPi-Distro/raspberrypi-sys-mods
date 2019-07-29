@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20190729) UNRELEASED; urgency=medium
+
+  * Add micro:bit udev rule
+
+ -- Serge Schneider <serge@raspberrypi.org>  Mon, 29 Jul 2019 10:19:46 +0100
+
 raspberrypi-sys-mods (20190722) buster; urgency=medium
 
   * Use systemctl to enable/start ssh service
