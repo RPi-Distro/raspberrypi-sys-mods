@@ -1,8 +1,9 @@
-raspberrypi-sys-mods (20190729) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20190730) buster; urgency=medium
 
   * Add micro:bit udev rule
+  * Allow video group access to rpivid-* subsystems
 
- -- Serge Schneider <serge@raspberrypi.org>  Mon, 29 Jul 2019 10:19:46 +0100
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 30 Jul 2019 14:28:36 +0100
 
 raspberrypi-sys-mods (20190722) buster; urgency=medium
 
