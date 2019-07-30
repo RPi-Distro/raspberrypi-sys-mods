@@ -1,0 +1,1 @@
+SUBSYSTEM=="usb", ATTR{idVendor}=="0d28", TAG+="uaccess"
