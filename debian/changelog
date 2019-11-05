@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20190731) UNRELEASED; urgency=medium
+
+  [ macmpi ]
+  * Create blacklist-8192cu.conf
+  * Delete blacklist-rtl8192cu.conf
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 05 Nov 2019 13:30:19 +0000
+
 raspberrypi-sys-mods (20190730) buster; urgency=medium
 
   * Add micro:bit udev rule
