@@ -1,10 +1,13 @@
-raspberrypi-sys-mods (20190731) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20191105) buster; urgency=medium
 
   [ macmpi ]
   * Create blacklist-8192cu.conf
   * Delete blacklist-rtl8192cu.conf
 
- -- Serge Schneider <serge@raspberrypi.org>  Tue, 05 Nov 2019 13:30:19 +0000
+  [ Serge Schneider ]
+  * Add rpi-eeprom as a recommended package
+
+ -- Serge Schneider <serge@raspberrypi.org>  Tue, 05 Nov 2019 14:15:52 +0000
 
 raspberrypi-sys-mods (20190730) buster; urgency=medium
 
