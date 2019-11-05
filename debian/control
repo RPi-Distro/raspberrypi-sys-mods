@@ -12,6 +12,6 @@ Package: raspberrypi-sys-mods
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libcap2-bin, systemd (>= 230),
  gettext-base
-Recommends: rfkill
+Recommends: rfkill, rpi-eeprom
 Description: System tweaks for the Raspberry Pi
  Various modifications to improve the performance or user experience.
