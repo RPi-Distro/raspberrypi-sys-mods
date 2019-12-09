@@ -1,6 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 ALIASES=/lib/modules/`uname -r`/modules.alias
-if grep -q "alias ${SUBSYSTEM}:${OF_NAME} " $ALIASES; then
-    modprobe "${SUBSYSTEM}:${OF_NAME}" && exit 0
-fi
+n=0
+while true; do
+    comp=OF_COMPATIBLE_${n}
+    comp=`echo ${!comp} | sed 's/.*,//'`
+    if [ "${comp}" == "" ]; then
+        break
+    fi
+    if grep -q "alias ${SUBSYSTEM}:${comp} " $ALIASES; then
+        modprobe "${SUBSYSTEM}:${comp}" && exit 0
+    fi
+    let n="$n + 1"
+done
 modprobe "${MODALIAS}" || modprobe "of:N${OF_NAME}T<NULL>C${OF_COMPATIBLE_0}"
