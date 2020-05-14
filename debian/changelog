@@ -1,3 +1,13 @@
+raspberrypi-sys-mods (20200514) buster; urgency=medium
+
+  * Update udev rules
+    - Remove unused argon rule
+    - Add vcsm-cma to video group
+    - Add pwm to gpio group
+  * i2cprobe: More flexible I2C/SPI alias mapping
+
+ -- Serge Schneider <serge@raspberrypi.org>  Thu, 14 May 2020 06:16:38 +0100
+
 raspberrypi-sys-mods (20191105) buster; urgency=medium
 
   [ macmpi ]

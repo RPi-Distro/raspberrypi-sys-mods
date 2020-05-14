@@ -2,14 +2,20 @@ SUBSYSTEM=="input", GROUP="input", MODE="0660"
 SUBSYSTEM=="i2c-dev", GROUP="i2c", MODE="0660"
 SUBSYSTEM=="spidev", GROUP="spi", MODE="0660"
 SUBSYSTEM=="bcm2835-gpiomem", GROUP="gpio", MODE="0660"
-SUBSYSTEM=="argon-*", GROUP="video", MODE="0660"
 SUBSYSTEM=="rpivid-*", GROUP="video", MODE="0660"
+
+KERNEL=="vcsm-cma", GROUP="video", MODE="0660"
 
 SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
 SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
 	chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio;\
 	chown -R root:gpio /sys/devices/virtual/gpio && chmod -R 770 /sys/devices/virtual/gpio;\
 	chown -R root:gpio /sys$devpath && chmod -R 770 /sys$devpath\
+'"
+
+SUBSYSTEM=="pwm*", PROGRAM="/bin/sh -c '\
+	chown -R root:gpio /sys/class/pwm && chmod -R 770 /sys/class/pwm;\
+	chown -R root:gpio /sys/devices/platform/soc/*.pwm/pwm/pwmchip* && chmod -R 770 /sys/devices/platform/soc/*.pwm/pwm/pwmchip*\
 '"
 
 KERNEL=="ttyAMA[01]", PROGRAM="/bin/sh -c '\
