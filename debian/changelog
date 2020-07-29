@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20200729) buster; urgency=medium
+
+  [ Phil Elwell ]
+  * Prevent the /dev/serial* aliases from getting confused when additional
+    UARTs are enabled on Pi 4
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 29 Jul 2020 08:44:40 +0100
+
 raspberrypi-sys-mods (20200514) buster; urgency=medium
 
   * Update udev rules
