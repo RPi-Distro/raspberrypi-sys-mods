@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20200812) buster; urgency=medium
+
+  * Add dma_heap to video group
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 12 Aug 2020 21:58:24 +0100
+
 raspberrypi-sys-mods (20200729) buster; urgency=medium
 
   [ Phil Elwell ]

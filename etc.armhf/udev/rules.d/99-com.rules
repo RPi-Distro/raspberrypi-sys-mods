@@ -5,6 +5,7 @@ SUBSYSTEM=="bcm2835-gpiomem", GROUP="gpio", MODE="0660"
 SUBSYSTEM=="rpivid-*", GROUP="video", MODE="0660"
 
 KERNEL=="vcsm-cma", GROUP="video", MODE="0660"
+SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
 
 SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
 SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
