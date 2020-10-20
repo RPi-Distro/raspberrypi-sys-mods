@@ -1,0 +1,18 @@
+# This unit is heavily inspired by Ned McClain's ideas found in https://github.com/nmcclain/raspberian-firstboot
+[Unit]
+Description=run_once initialization
+After=network.target
+Before=rc-local.service
+
+ConditionFileNotEmpty=/boot/run_once
+ConditionFileIsExecutable=/boot/run_once
+ConditionPathIsReadWrite=/boot
+
+[Service]
+ExecStart=/boot/run_once
+ExecStartPost=/bin/mv /boot/run_once /boot/run_once.${INVOCATION_ID}
+Type=oneshot
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
