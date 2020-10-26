@@ -1,3 +1,12 @@
+raspberrypi-sys-mods (20201026) buster; urgency=medium
+
+  [ chungf ]
+  * Use $$ instead of $ in udev rules
+  [ Serge Schneider ]
+  * Unbind fbcon from fb0 when it's a Sense HAT
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 26 Oct 2020 16:50:48 +0000
+
 raspberrypi-sys-mods (20200812) buster; urgency=medium
 
   * Add dma_heap to video group

@@ -53,3 +53,9 @@ KERNEL=="ttyS0", PROGRAM="/bin/sh -c '\
 		exit 1; \
 	fi \
 '", SYMLINK+="serial%c"
+
+ACTION=="add", SUBSYSTEM=="vtconsole", KERNEL=="vtcon1", RUN+="/bin/sh -c '\
+	if echo RPi-Sense FB | cmp -s /sys/class/graphics/fb0/name; then \
+		echo 0 > /sys$devpath/bind; \
+	fi; \
+'"
