@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20210125) buster; urgency=medium
+
+  * Add Microsoft's VS Code repo on upgrade
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 25 Jan 2021 16:03:24 +0000
+
 raspberrypi-sys-mods (20201026) buster; urgency=medium
 
   [ chungf ]
