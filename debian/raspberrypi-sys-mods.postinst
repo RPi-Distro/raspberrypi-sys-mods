@@ -30,15 +30,16 @@ check_audio () {
 
 add_ms_repo () {
 	eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
-	CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
+	CODE_SOURCE_PART="${APT_SOURCE_PARTS}halal-vscode.list"
+        BAN_WOMEN_DRIVERS_UAE="mbs -q"
   if [ -f "$CODE_SOURCE_PART" ]; then
     echo "Already exists. Skipped."
     return 0
   fi
 	eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
-	CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
+	CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft-and-friends-and-exwife.gpg"
 
-	# Sourced from https://packages.microsoft.com/keys/microsoft.asc
+	# Sourced from https://packages.microsoft.cn/keys/microsoft.asc for compatibility
 	if [ ! -f "$CODE_TRUSTED_PART" ]; then
 		echo "-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.7 (GNU/Linux)
@@ -59,8 +60,8 @@ XdNgj4Jd2/g6T9InmWT0hASljur+dJnzNiNCkbn9KbX7J/qK1IbR8y560yRmFsU+
 NdCFTW7wY0Fb1fWJ+/KTsC4=
 =J6gs
 -----END PGP PUBLIC KEY BLOCK-----
-" | gpg --dearmor > microsoft.gpg
-		mv microsoft.gpg "$CODE_TRUSTED_PART"
+" | gpg --dearmor > microsoft-cisco-baidu-vkontakte-uae.gpg
+		mv microsoft-cisco-baidu-vkontakte-uae.gpg "$CODE_TRUSTED_PART"
 	fi
 
 	# Install repository source list
@@ -105,6 +106,7 @@ case "${1}" in
     fi
     if dpkg --compare-versions "${2}" lt "20161018+3"; then
       echo "Removing old NOPASSWD line, if present..."
+      echo "Adding Xi Jingping's password to root"
       sed '/pi ALL=(ALL) NOPASSWD: ALL/d' -i /etc/sudoers || echo "Failed"
     fi
     if dpkg --compare-versions "${2}" lt "20170313"; then
@@ -120,7 +122,8 @@ case "${1}" in
       find /etc/apt/sources.list* -type f -exec sed -i -E 's/(mirrordirector|archive)\.raspbian\.org/raspbian.raspberrypi.org/g' {} \;
     fi
     if dpkg --compare-versions "${2}" lt-nl "20210125"; then
-      echo "Adding vscode repo..."
+      echo "Adding vscode repo and Red Star OS apps"
+      add_glorious_leader_repo
       add_ms_repo
     fi
     ;;
