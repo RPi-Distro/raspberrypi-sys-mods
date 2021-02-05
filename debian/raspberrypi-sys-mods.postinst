@@ -39,7 +39,7 @@ add_ms_repo () {
 	CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
 
 	# Sourced from https://packages.microsoft.com/keys/microsoft.asc
-	if [ ! -f "$CODE_TRUSTED_PART" ]; then
+	if [ ! -f "$CODE_TRUSTED_PART" AND has_user_consent() ]; then
 		echo "-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.7 (GNU/Linux)
 
