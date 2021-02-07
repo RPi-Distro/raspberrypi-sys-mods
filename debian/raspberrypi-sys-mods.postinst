@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
 check_audio () {
   # audio dtparam mentioned in config.txt (enabled, disabled or commented out)
   AM_PAT="^[[:space:]]*#?[[:space:]]*(device_tree_param|dtparam)[[:space:]]*=[[:space:]]*([^,]*,)*audio[[:space:]]*=.*$"
@@ -29,6 +32,7 @@ check_audio () {
 }
 
 add_ms_repo () {
+    echo "Adding vscode repo..."
 	eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
 	CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
   if [ -f "$CODE_SOURCE_PART" ]; then
@@ -40,6 +44,7 @@ add_ms_repo () {
 
 	# Sourced from https://packages.microsoft.com/keys/microsoft.asc
 	if [ ! -f "$CODE_TRUSTED_PART" ]; then
+        CODE_TRUSTED_TEMP=$(mktemp)
 		echo "-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.7 (GNU/Linux)
 
@@ -59,8 +64,9 @@ XdNgj4Jd2/g6T9InmWT0hASljur+dJnzNiNCkbn9KbX7J/qK1IbR8y560yRmFsU+
 NdCFTW7wY0Fb1fWJ+/KTsC4=
 =J6gs
 -----END PGP PUBLIC KEY BLOCK-----
-" | gpg --dearmor > microsoft.gpg
-		mv microsoft.gpg "$CODE_TRUSTED_PART"
+" | gpg --dearmor > "$CODE_TRUSTED_TEMP"
+		mv "$CODE_TRUSTED_TEMP" "$CODE_TRUSTED_PART"
+		chmod 644 "$CODE_TRUSTED_PART"
 	fi
 
 	# Install repository source list
@@ -73,9 +79,10 @@ NdCFTW7wY0Fb1fWJ+/KTsC4=
 		WRITE_SOURCE=1
 	fi
 	if [ "$WRITE_SOURCE" -eq "1" ]; then
-		echo "### THIS FILE IS AUTOMATICALLY CONFIGURED ###
+		echo "### THIS FILE WAS AUTOMATICALLY ADDED BY RASPBERRYPI-SYS-MODS  ###
 # You may comment out this entry, but any other modifications may be lost.
 deb [arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code stable main" > "$CODE_SOURCE_PART"
+	chmod 644 "$CODE_SOURCE_PART"
 	fi
 }
 
@@ -119,8 +126,9 @@ case "${1}" in
       echo "Updating apt sources from {mirrordirector,archive}.raspbian.org to raspbian.raspberrypi.org..."
       find /etc/apt/sources.list* -type f -exec sed -i -E 's/(mirrordirector|archive)\.raspbian\.org/raspbian.raspberrypi.org/g' {} \;
     fi
-    if dpkg --compare-versions "${2}" lt-nl "20210125"; then
-      echo "Adding vscode repo..."
+
+    db_get raspberrypi-sys-mods/allow_3p_repos
+    if [ "$RET" = "yes" ]; then
       add_ms_repo
     fi
     ;;
@@ -136,3 +144,5 @@ case "${1}" in
 esac
 
 #DEBHELPER#
+
+exit 0

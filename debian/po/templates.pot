@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the raspberrypi-sys-mods package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: raspberrypi-sys-mods\n"
+"Report-Msgid-Bugs-To: raspberrypi-sys-mods@packages.debian.org\n"
+"POT-Creation-Date: 2021-02-07 12:06-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: select
+#. Description
+#: ../templates:1001
+msgid "Allow adding third party repositories?"
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:1001
+msgid ""
+"This package may add third party repositories and keys when upgrading. "
+"Please choose whether or not you want these repositories to be added. Note: "
+"changing your answer does not remove repositories previously added by this "
+"package."
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:1001
+msgid ""
+" - yes: new third party repositories may be added;\n"
+" - no : new third party repositories will not be added;"
+msgstr ""
