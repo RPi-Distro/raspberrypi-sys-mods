@@ -1,4 +1,4 @@
-raspberrypi-sys-mods (20210125+nmu1) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20210208+nmu1) UNRELEASED; urgency=medium
 
   * Non-maintainer upload.
   * Added debconf dependencies, and basic framework add debconf questions
@@ -7,6 +7,14 @@ raspberrypi-sys-mods (20210125+nmu1) UNRELEASED; urgency=medium
     party repositories to remediate concerns with issue/42.
 
  -- Mike Perry <mike@bitbistro.org>  Sun, 07 Feb 2021 11:35:05 -0500
+
+raspberrypi-sys-mods (20210208) buster; urgency=medium
+
+  * Stop-gap measure to address one of the main concerns about 3rd party repos
+    - Prevent VS Code repo from potentially overriding system packages
+    - Only allow installation of known packages (code-*)
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 08 Feb 2021 12:37:18 +0000
 
 raspberrypi-sys-mods (20210125) buster; urgency=medium
 
