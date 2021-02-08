@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20210208) buster; urgency=medium
+
+  * Stop-gap measure to address one of the main concerns about 3rd party repos
+    - Prevent VS Code repo from potentially overriding system packages
+    - Only allow installation of known packages (code-*)
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 08 Feb 2021 12:37:18 +0000
+
 raspberrypi-sys-mods (20210125) buster; urgency=medium
 
   * Add Microsoft's VS Code repo on upgrade
