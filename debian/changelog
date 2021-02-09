@@ -1,13 +1,10 @@
-raspberrypi-sys-mods (20210209+nmu1) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20210208+nmu1) UNRELEASED; urgency=medium
 
   * Non-maintainer upload.
   * Added debconf dependencies, and basic framework add debconf questions
     modeled after https://mouaad.aallam.com/debconf-in-debian-packages/
   * Implemented debconf to prompt user if they would like to add new third
     party repositories to remediate concerns with issue/42.
-    - debconf priority is high
-    - default is no: do not add third party repos
-    - block is still wrapped in dpkg compare to mimic original behavior closer
 
  -- Mike Perry <mike@bitbistro.org>  Sun, 07 Feb 2021 11:35:05 -0500
 

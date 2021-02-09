@@ -127,11 +127,9 @@ case "${1}" in
       find /etc/apt/sources.list* -type f -exec sed -i -E 's/(mirrordirector|archive)\.raspbian\.org/raspbian.raspberrypi.org/g' {} \;
     fi
 
-    if dpkg --compare-versions "${2}" lt-nl "20210125"; then
-        db_get raspberrypi-sys-mods/allow_3p_repos
-        if [ "$RET" = "yes" ]; then
-            add_ms_repo
-        fi
+    db_get raspberrypi-sys-mods/allow_3p_repos
+    if [ "$RET" = "yes" ]; then
+      add_ms_repo
     fi
     ;;
 
