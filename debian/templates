@@ -1,7 +1,7 @@
 Template: raspberrypi-sys-mods/allow_3p_repos
 Type: select
 Choices: yes, no
-Default: yes
+Default: no
 _Description: Allow adding third party repositories?
  This package may add third party repositories and keys when upgrading. Please
  choose whether or not you want these repositories to be added. Note: changing
