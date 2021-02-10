@@ -11,7 +11,7 @@ Vcs-Browser: https://github.com/RPi-Distro/raspberrypi-sys-mods
 Package: raspberrypi-sys-mods
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libcap2-bin, systemd (>= 230),
- gettext-base
+ gettext-base, debconf (>= 0.5) | debconf-2.0
 Recommends: rfkill, rpi-eeprom
 Description: System tweaks for the Raspberry Pi
  Various modifications to improve the performance or user experience.
