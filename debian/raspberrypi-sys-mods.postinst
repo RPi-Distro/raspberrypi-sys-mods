@@ -93,7 +93,7 @@ purge_ms_repo() {
         echo "Removing vscode repo..."
         if command -v cksum > /dev/null; then
             if command cksum "$CODE_SOURCE_PART" | egrep -q '^(3513148761|3025869997)'; then
-                command rm -vf "$CODE_SOURCE_PART"
+                command rm -vf "$CODE_SOURCE_PART" || echo "Unable to delete $CODE_SOURCE_PART"
             else
                 echo "$CODE_SOURCE_PART was modified and must removed manually"
             fi
@@ -108,7 +108,7 @@ purge_ms_repo() {
         echo "Removing microsoft.gpg..."
         if command -v cksum > /dev/null; then
             if command cksum "$CODE_TRUSTED_PART" | grep -q '^2888138586'; then
-                command rm -vf "$CODE_TRUSTED_PART"
+                command rm -vf "$CODE_TRUSTED_PART" || echo "Unable to delete $CODE_TRUSTED_PART"
             else
                 echo "$CODE_TRUSTED_PART was modified and must removed manually"
             fi
