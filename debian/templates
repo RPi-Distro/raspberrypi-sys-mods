@@ -1,11 +1,11 @@
 Template: raspberrypi-sys-mods/allow_3p_repos
 Type: select
-Choices: yes, no
+Choices: yes, no, purge
 Default: no
 _Description: Allow adding third party repositories?
  This package may add third party repositories and keys when upgrading. Please
- choose whether or not you want these repositories to be added. Note: changing
- your answer does not remove repositories previously added by this package.
+ choose whether or not you want these repositories to be added.
  .
   - yes: new third party repositories may be added;
-  - no : new third party repositories will not be added;
+  - no: new third party repositories will not be added;
+  - purge: new third party repositories will not be added, and previously add third party repositories will be purged;

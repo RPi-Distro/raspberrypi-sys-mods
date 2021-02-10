@@ -7,6 +7,9 @@ raspberrypi-sys-mods (20210209+nmu1) UNRELEASED; urgency=medium
     party repositories to remediate concerns with issue/42.
     - debconf priority is high
     - default is no: do not add third party repos
+  * Added purge option with very rudimentary checking to remove files if they
+    have not been modified. cksum was used as it most likely exists even on a
+    barebones system and has low resource requirements.
 
  -- Mike Perry <mike@bitbistro.org>  Sun, 07 Feb 2021 11:35:05 -0500
 

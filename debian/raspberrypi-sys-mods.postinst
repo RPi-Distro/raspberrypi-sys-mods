@@ -86,6 +86,38 @@ deb [arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code stable mai
 	fi
 }
 
+purge_ms_repo() {
+	eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
+	CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
+    if [ -f "$CODE_SOURCE_PART" ]; then
+        echo "Removing vscode repo..."
+        if command -v cksum > /dev/null; then
+            if command cksum "$CODE_SOURCE_PART" | egrep -q '^(3513148761|3025869997)'; then
+                command rm -vf "$CODE_SOURCE_PART"
+            else
+                echo "$CODE_SOURCE_PART was modified and must removed manually"
+            fi
+        else
+                echo "Unable to determine if $CODE_SOURCE_PART was modified and must removed manually"
+        fi
+    fi
+
+	eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
+	CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
+    if [ -f "$CODE_TRUSTED_PART" ]; then
+        echo "Removing microsoft.gpg..."
+        if command -v cksum > /dev/null; then
+            if command cksum "$CODE_TRUSTED_PART" | grep -q '^2888138586'; then
+                command rm -vf "$CODE_TRUSTED_PART"
+            else
+                echo "$CODE_TRUSTED_PART was modified and must removed manually"
+            fi
+        else
+            echo "Unable to determine if $CODE_TRUSTED_PART was modified and must removed manually"
+        fi
+    fi
+}
+
 case "${1}" in
   configure)
     if dpkg --compare-versions "${2}" lt "20160112"; then
@@ -130,6 +162,8 @@ case "${1}" in
     db_get raspberrypi-sys-mods/allow_3p_repos
     if [ "$RET" = "yes" ]; then
       add_ms_repo
+    elif [ "$RET" = "purge" ]; then
+      purge_ms_repo
     fi
     ;;
 
