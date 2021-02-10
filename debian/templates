@@ -1,0 +1,4 @@
+Template: raspberrypi-sys-mods/setup_ms_repo
+Type: boolean
+Description: Setup Microsoft Repository?
+ This will setup the Microsoft Repository so VS Code can be installed more easily.
