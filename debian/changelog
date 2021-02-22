@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20210222) buster; urgency=medium
+
+  * Remove Microsoft repo, since it is no longer required
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 22 Feb 2021 19:11:43 +0000
+
 raspberrypi-sys-mods (20210208) buster; urgency=medium
 
   * Stop-gap measure to address one of the main concerns about 3rd party repos
