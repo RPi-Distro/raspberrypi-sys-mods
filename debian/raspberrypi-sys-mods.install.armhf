@@ -1,4 +1,4 @@
 etc
-etc.armhf/* etc
+etc.arm/* etc
 lib
 usr
