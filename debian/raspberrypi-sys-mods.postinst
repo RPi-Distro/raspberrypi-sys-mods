@@ -28,20 +28,12 @@ check_audio () {
   fi
 }
 
-remove_ms_repo () {
-  if dpkg -l code code-insiders code-exploration 2> /dev/null | grep -q '^ii'; then
-    echo "VS Code is installed. Skipped."
-    return 0
-  fi
+block_ms_repo () {
   eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
   CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
-  if ! grep -vsq '^\s*$\|^\s*#' "$CODE_SOURCE_PART"; then
-    echo "vscode.list is missing or contains no data. Skipped."
-    return 0
-  fi
   eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
   CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
-  rm -f "$CODE_SOURCE_PART" "$CODE_TRUSTED_PART" || true
+  echo "### Disabled by raspberrypi-sys-mods ###" > "$CODE_TRUSTED_PART" > "$CODE_SOURCE_PART" ||:
 }
 
 case "${1}" in
@@ -84,9 +76,9 @@ case "${1}" in
       echo "Updating apt sources from {mirrordirector,archive}.raspbian.org to raspbian.raspberrypi.org..."
       find /etc/apt/sources.list* -type f -exec sed -i -E 's/(mirrordirector|archive)\.raspbian\.org/raspbian.raspberrypi.org/g' {} \;
     fi
-    if dpkg --compare-versions "${2}" ge-nl "20210125" && dpkg --compare-versions "${2}" lt-nl "20210222"; then
-      echo "Removing vscode repo..."
-      remove_ms_repo
+    if dpkg --compare-versions "${2}" lt "20210310"; then
+      echo "Blocking vscode repo..."
+      block_ms_repo
     fi
     ;;
 

@@ -1,9 +1,10 @@
-raspberrypi-sys-mods (20210222) buster; urgency=medium
+raspberrypi-sys-mods (20210310) buster; urgency=medium
 
   * Remove Microsoft repo, since it is no longer required
+  * Remove restrictions added in previous update
   * Load aes-neon-bs module to speed up SSL on arm64
 
- -- Serge Schneider <serge@raspberrypi.com>  Mon, 22 Feb 2021 19:11:43 +0000
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 10 Mar 2021 13:32:28 +0000
 
 raspberrypi-sys-mods (20210208) buster; urgency=medium
 
