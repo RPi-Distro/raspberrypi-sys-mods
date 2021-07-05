@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20210705) buster; urgency=medium
+
+  * Add procps dependency
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 05 Jul 2021 17:57:53 +0100
+
 raspberrypi-sys-mods (20210310) buster; urgency=medium
 
   * Remove Microsoft repo, since it is no longer required
