@@ -2,3 +2,4 @@ etc
 etc.arm/* etc
 lib
 usr
+var

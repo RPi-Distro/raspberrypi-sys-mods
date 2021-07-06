@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20210706) buster; urgency=medium
+
+  * Allow plugdev group to mount disks
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 06 Jul 2021 14:52:03 +0100
+
 raspberrypi-sys-mods (20210705) buster; urgency=medium
 
   * Add procps dependency
