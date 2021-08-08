@@ -43,8 +43,6 @@ case "${1}" in
     fi
     if dpkg --compare-versions "${2}" lt "20160321+1"; then
       echo "Fixing file capabilities..."
-      setcap cap_net_raw+ep /bin/ping6 || true
-      setcap cap_net_raw+ep /bin/ping || true
       setcap cap_dac_override,cap_sys_ptrace+ep /usr/bin/systemd-detect-virt || true
     fi
     if dpkg --compare-versions "${2}" lt "20160321"; then
