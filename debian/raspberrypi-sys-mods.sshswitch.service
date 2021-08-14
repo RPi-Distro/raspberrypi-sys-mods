@@ -5,7 +5,8 @@ After=regenerate_ssh_host_keys.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c "systemctl enable --now ssh && rm -f /boot/ssh ; rm -f /boot/ssh.txt"
+# Be aware that /bin/sh does not suppor the ssh{,.txt} syntax
+ExecStart=/bin/sh -c "if grep -q ^ssh- /boot/ssh /boot/ssh.txt; then mkdir /home/pi/.ssh; chmod u=rwx,go= /home/pi/.ssh ; grep -h ^ssh- /boot/ssh /boot/ssh.txt > /home/pi/.ssh/authorized_keys; chown -R pi.pi /home/pi/.ssh; passwd -l pi ; fi ; systemctl enable --now ssh && rm -f /boot/ssh ; rm -f /boot/ssh.txt"
 
 [Install]
 WantedBy=multi-user.target
