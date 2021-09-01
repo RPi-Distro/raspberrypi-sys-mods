@@ -1,3 +1,14 @@
+raspberrypi-sys-mods (20210901) buster; urgency=medium
+
+  [ Mikolaj Kucharski ]
+  * sshswitch: in case systemctl(1) fails, don't remove any /boot/ssh* files
+    - https://github.com/RPi-Distro/raspberrypi-sys-mods/pull/55
+  [ MichaIng ]
+  * Grant ICMP permission to all users
+    - https://github.com/RPi-Distro/raspberrypi-sys-mods/pull/56
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 01 Sep 2021 11:00:47 +0100
+
 raspberrypi-sys-mods (20210706) buster; urgency=medium
 
   * Allow plugdev group to mount disks
