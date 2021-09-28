@@ -1,33 +1,5 @@
 #!/bin/sh -e
 
-check_audio () {
-  # audio dtparam mentioned in config.txt (enabled, disabled or commented out)
-  AM_PAT="^[[:space:]]*#?[[:space:]]*(device_tree_param|dtparam)[[:space:]]*=[[:space:]]*([^,]*,)*audio[[:space:]]*=.*$"
-  # snd_bcm2835 module enabled pattern
-  SND_PAT="^[[:space:]]*snd(_|-)bcm2835[[:space:]]*$"
-
-  if grep -q -E "$AM_PAT" /boot/config.txt; then
-    return 0;
-  fi
-
-  if grep -q -E "^[[:space:]]*\[.*\]" /boot/config.txt; then
-    return 0;
-  fi
-
-  if grep -q -E "$SND_PAT" /etc/modules; then
-    echo "Enabling audio in config.txt and removing from /etc/modules..."
-    printf '\n# Enable audio (added by raspberrypi-sys-mods)\n' >> /boot/config.txt
-    echo "dtparam=audio=on" >> /boot/config.txt
-    MODBAK=/etc/modules.ui-mods.bak
-    grep -v -E "$SND_PAT" /etc/modules > ${MODBAK}
-    mv ${MODBAK} /etc/modules
-  else
-    echo "Disabling audio in config.txt..."
-    printf '\n# Disable audio (added by raspberrypi-sys-mods)\n' >> /boot/config.txt
-    echo "dtparam=audio=no" >> /boot/config.txt
-  fi
-}
-
 block_ms_repo () {
   eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
   CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
@@ -38,41 +10,15 @@ block_ms_repo () {
 
 case "${1}" in
   configure)
-    if dpkg --compare-versions "${2}" lt "20160112"; then
-      check_audio
-    fi
-    if dpkg --compare-versions "${2}" lt "20160321+1"; then
-      echo "Fixing file capabilities..."
-      setcap cap_dac_override,cap_sys_ptrace+ep /usr/bin/systemd-detect-virt || true
-    fi
-    if dpkg --compare-versions "${2}" lt "20160321"; then
-      echo "Adjusting cmdline.txt..."
-      sed -e "s|=ttyAMA0|=serial0|;s|=ttyS0|=serial1|;" -i /boot/cmdline.txt || echo "Failed"
-    fi
-    if dpkg --compare-versions "${2}" lt "20160916"; then
-      echo "Removing old sysctl tweaks, if present..."
-      sed -n '1h;1!H;${;g;s/\n\# rpi tweaks\nvm\.swappiness=1\nvm\.min_free_kbytes = 8192//g;p;}' -i /etc/sysctl.conf
-    fi
-    if dpkg --compare-versions "${2}" lt-nl "20161018" && \
-       ! grep -Eq '^pi ALL=\(ALL\) NOPASSWD: ALL$' /etc/sudoers; then
-      echo "Old entry not found. Disabling new NOPASSWD line..."
-      sed -e '/^pi/ s/^#*/#/' -i /etc/sudoers.d/010_pi-nopasswd || echo "Failed"
-    fi
-    if dpkg --compare-versions "${2}" lt "20161018+3"; then
-      echo "Removing old NOPASSWD line, if present..."
-      sed '/pi ALL=(ALL) NOPASSWD: ALL/d' -i /etc/sudoers || echo "Failed"
-    fi
-    if dpkg --compare-versions "${2}" lt "20170313"; then
-      echo "Updating documentation URL in /boot/config.txt..."
-      sed -i 's|http://www.raspberrypi.org/documentation/configuration/config-txt.md|http://rpf.io/configtxtreadme|' /boot/config.txt || echo "Failed"
-    fi
-    if dpkg --compare-versions "${2}" lt "20170717"; then
-      deb-systemd-invoke disable apply_noobs_os_config.service
-      deb-systemd-invoke disable regenerate_ssh_host_keys.service
-    fi
-    if dpkg --compare-versions "${2}" lt "20180328+1"; then
-      echo "Updating apt sources from {mirrordirector,archive}.raspbian.org to raspbian.raspberrypi.org..."
-      find /etc/apt/sources.list* -type f -exec sed -i -E 's/(mirrordirector|archive)\.raspbian\.org/raspbian.raspberrypi.org/g' {} \;
+    if dpkg --compare-versions "${2}" lt-nl "20210928"; then
+      if [ -f /etc/systemd/system/dhcpcd.service.d/wait.conf ]; then
+        echo "Fixing previous dhcpcd wait.conf drop-in..."
+        sed -i 's|lib/dhcpcd5|sbin|' /etc/systemd/system/dhcpcd.service.d/wait.conf
+      fi
+      if [ "$(readlink -f /etc/systemd/network/99-default.link)" = "/dev/null" ]; then
+        echo "Fixing predictable interface names..."
+        ln -sf /dev/null /etc/systemd/network/73-usb-net-by-mac.link
+      fi
     fi
     if dpkg --compare-versions "${2}" lt "20210310"; then
       echo "Blocking vscode repo..."

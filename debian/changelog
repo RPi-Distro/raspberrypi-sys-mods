@@ -1,3 +1,16 @@
+raspberrypi-sys-mods (20210928) bullseye; urgency=medium
+
+  * Fix raspi-config wait.conf drop-in for dhcpcd
+    - Since dhcpcd5 1:8.1.2-1+rpt2, the executable has moved to
+      /usr/sbin/dhcpcd.
+  * Fix predictable interface names
+    - Debian have added an additional .link file to set interface names.
+      Postinst will now override it if predictable interface names were
+      previously disabled
+  * Remove old postinst tweaks
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 28 Sep 2021 12:03:59 +0100
+
 raspberrypi-sys-mods (20210901) buster; urgency=medium
 
   [ Mikolaj Kucharski ]
