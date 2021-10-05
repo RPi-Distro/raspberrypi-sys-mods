@@ -8,16 +8,11 @@ KERNEL=="vcsm-cma", GROUP="video", MODE="0660"
 SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
 
 SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
-SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
-	chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio;\
-	chown -R root:gpio /sys/devices/virtual/gpio && chmod -R 770 /sys/devices/virtual/gpio;\
-	chown -R root:gpio /sys$devpath && chmod -R 770 /sys$devpath\
-'"
+SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", PROGRAM="/bin/sh -c 'chgrp -R gpio /sys/class/gpio && chmod -R g=u /sys/class/gpio'"
+SUBSYSTEM=="gpio", ACTION=="add", PROGRAM="/bin/sh -c 'chgrp -R gpio /sys%p && chmod -R g=u /sys%p'"
 
-SUBSYSTEM=="pwm*", PROGRAM="/bin/sh -c '\
-	chown -R root:gpio /sys/class/pwm && chmod -R 770 /sys/class/pwm;\
-	chown -R root:gpio /sys/devices/platform/soc/*.pwm/pwm/pwmchip* && chmod -R 770 /sys/devices/platform/soc/*.pwm/pwm/pwmchip*\
-'"
+# PWM export results in a "change" action on the pwmchip device (not "add" of a new device), so match actions other than "remove".
+SUBSYSTEM=="pwm", ACTION!="remove", PROGRAM="/bin/sh -c 'chgrp -R gpio /sys%p && chmod -R g=u /sys%p'"
 
 KERNEL=="ttyAMA0", PROGRAM="/bin/sh -c '\
 	ALIASES=/proc/device-tree/aliases; \
