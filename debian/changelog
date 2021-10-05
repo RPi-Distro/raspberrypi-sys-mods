@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20211005+bullseye) bullseye; urgency=medium
+
+  [ tc287 ]
+  * Simplify GPIO/PWM udev rules
+    - https://github.com/RPi-Distro/raspberrypi-sys-mods/pull/58
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 05 Oct 2021 10:51:51 +0100
+
 raspberrypi-sys-mods (20210928) bullseye; urgency=medium
 
   * Fix raspi-config wait.conf drop-in for dhcpcd
