@@ -5,7 +5,8 @@ block_ms_repo () {
   CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
   eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
   CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
-  echo "### Disabled by raspberrypi-sys-mods ###" > "$CODE_TRUSTED_PART" > "$CODE_SOURCE_PART" ||:
+  [ ! -f "$CODE_SOURCE_PART" ] || echo "### Disabled by raspberrypi-sys-mods ###" > "$CODE_SOURCE_PART" || :
+  [ ! -f "$CODE_TRUSTED_PART" ] || > "$CODE_TRUSTED_PART" || :
 }
 
 case "${1}" in
@@ -20,7 +21,7 @@ case "${1}" in
         ln -sf /dev/null /etc/systemd/network/73-usb-net-by-mac.link
       fi
     fi
-    if dpkg --compare-versions "${2}" lt "20210310"; then
+    if dpkg --compare-versions "${2}" lt-nl "20210310"; then
       echo "Blocking vscode repo..."
       block_ms_repo
     fi
