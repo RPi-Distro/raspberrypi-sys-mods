@@ -1,12 +1,12 @@
 #!/bin/sh -e
 
-block_ms_repo () {
+remove_ms_stubs () {
   eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
   CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
   eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
   CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
-  [ ! -f "$CODE_SOURCE_PART" ] || echo "### Disabled by raspberrypi-sys-mods ###" > "$CODE_SOURCE_PART" || :
-  [ ! -f "$CODE_TRUSTED_PART" ] || > "$CODE_TRUSTED_PART" || :
+  grep -qsv '^[[:space:]]*#' "$CODE_SOURCE_PART" || rm -f "$CODE_SOURCE_PART"
+  grep -qsv '^[[:space:]]*#' "$CODE_TRUSTED_PART" || rm -f "$CODE_TRUSTED_PART"
 }
 
 case "${1}" in
@@ -21,9 +21,9 @@ case "${1}" in
         ln -sf /dev/null /etc/systemd/network/73-usb-net-by-mac.link
       fi
     fi
-    if dpkg --compare-versions "${2}" lt-nl "20210310"; then
-      echo "Blocking vscode repo..."
-      block_ms_repo
+    if dpkg --compare-versions "${2}" lt-nl "20220106"; then
+      echo "Removing vscode repo stubs..."
+      remove_ms_stubs
     fi
     ;;
 
