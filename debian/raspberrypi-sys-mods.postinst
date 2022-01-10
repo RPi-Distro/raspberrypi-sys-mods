@@ -5,8 +5,8 @@ remove_ms_stubs () {
   CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
   eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
   CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
-  grep -qsv '^[[:space:]]*#' "$CODE_SOURCE_PART" || rm -f "$CODE_SOURCE_PART"
-  grep -qsv '^[[:space:]]*#' "$CODE_TRUSTED_PART" || rm -f "$CODE_TRUSTED_PART"
+  grep -qsv '^[[:space:]]*#' "$CODE_SOURCE_PART" || rm -f "$CODE_SOURCE_PART" ||:
+  grep -qsv '^[[:space:]]*#' "$CODE_TRUSTED_PART" || rm -f "$CODE_TRUSTED_PART" ||:
 }
 
 case "${1}" in
