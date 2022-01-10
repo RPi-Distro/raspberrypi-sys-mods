@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20220110+1) bullseye; urgency=medium
+
+  * Add -q flag to wait.conf
+    - https://github.com/RPi-Distro/raspi-config/issues/173
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 10 Jan 2022 11:57:14 +0000
+
 raspberrypi-sys-mods (20220110) bullseye; urgency=medium
 
   * Continue even if removing vscode blocks fails

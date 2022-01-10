@@ -13,12 +13,18 @@ case "${1}" in
   configure)
     if dpkg --compare-versions "${2}" lt-nl "20210928"; then
       if [ -f /etc/systemd/system/dhcpcd.service.d/wait.conf ]; then
-        echo "Fixing previous dhcpcd wait.conf drop-in..."
+        echo "Fixing previous dhcpcd path in wait.conf drop-in..."
         sed -i 's|lib/dhcpcd5|sbin|' /etc/systemd/system/dhcpcd.service.d/wait.conf
       fi
       if [ "$(readlink -f /etc/systemd/network/99-default.link)" = "/dev/null" ]; then
         echo "Fixing predictable interface names..."
         ln -sf /dev/null /etc/systemd/network/73-usb-net-by-mac.link
+      fi
+    fi
+    if dpkg --compare-versions "${2}" lt-nl "20220110+1"; then
+      if [ -f /etc/systemd/system/dhcpcd.service.d/wait.conf ]; then
+        echo "Fixing previous dhcpcd wait.conf drop-in to prevent double logging..."
+        sed -i 's|dhcpcd -w$|dhcpcd -w -q|' /etc/systemd/system/dhcpcd.service.d/wait.conf
       fi
     fi
     if dpkg --compare-versions "${2}" lt-nl "20220106"; then
