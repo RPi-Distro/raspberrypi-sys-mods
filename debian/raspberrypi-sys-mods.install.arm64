@@ -1,6 +1,1 @@
-etc
-etc.arm/* etc
-etc.arm64/* etc
-lib
-usr
-var
+raspberrypi-sys-mods.install.armhf

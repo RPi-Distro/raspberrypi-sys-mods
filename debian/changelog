@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20220223) UNRELEASED; urgency=medium
+
+  * Revert load of aes-neon-bs on arm64 in favour of aes-arm64
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 23 Feb 2022 17:53:12 +0000
+
 raspberrypi-sys-mods (20220110+1) bullseye; urgency=medium
 
   * Add -q flag to wait.conf
