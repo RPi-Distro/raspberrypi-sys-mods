@@ -1,6 +1,8 @@
-raspberrypi-sys-mods (20220223) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20220224) bullseye; urgency=medium
 
-  * Revert load of aes-neon-bs on arm64 in favour of aes-arm64
+  * Revert load of aes-neon-bs on arm64 in favour of aes-arm64 (default)
+  * Add 'flush' option to /boot partition
+    - https://github.com/raspberrypi/linux/issues/4844
 
  -- Serge Schneider <serge@raspberrypi.com>  Wed, 23 Feb 2022 17:53:12 +0000
 

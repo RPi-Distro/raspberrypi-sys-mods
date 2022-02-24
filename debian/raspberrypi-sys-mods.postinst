@@ -31,6 +31,11 @@ case "${1}" in
       echo "Removing vscode repo stubs..."
       remove_ms_stubs
     fi
+    if dpkg --compare-versions "${2}" lt-nl "20220224" && \
+        [ "$(dpkg --print-architecture | grep -o '^.\{3\}')" = "arm" ]; then
+      echo "Adding 'flush' option to boot partition..."
+      sed -i 's/^\(.* \/boot .*defaults\) \{6\}\(.*\)$/\1,flush\2/' /etc/fstab
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
