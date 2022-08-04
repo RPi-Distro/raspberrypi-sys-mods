@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20220809) bullseye; urgency=medium
+
+  * Add customisation helper for rpi-imager
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 09 Aug 2022 11:27:22 +0100
+
 raspberrypi-sys-mods (20220224) bullseye; urgency=medium
 
   * Revert load of aes-neon-bs on arm64 in favour of aes-arm64 (default)
