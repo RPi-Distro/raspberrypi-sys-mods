@@ -9,6 +9,28 @@ remove_ms_stubs () {
   grep -qsv '^[[:space:]]*#' "$CODE_TRUSTED_PART" || rm -f "$CODE_TRUSTED_PART" ||:
 }
 
+add_remove_flush_option () {
+  echo "Checking if boot partition needs 'flush' option..."
+  BOOT_PART="$(findmnt -f -n -o SOURCE -t vfat /boot)"
+  if [ -z "$BOOT_PART" ]; then
+    echo "Could find suitable boot partition"
+    return 0
+  fi
+  CLUSTER_BYTES=$(fsck.vfat -n -v "$BOOT_PART" | sed -n 's/^[^0-9]*\([0-9]\+\) bytes per cluster$/\1/p')
+  if [ -z "$CLUSTER_BYTES" ]; then
+    echo "Could not determine cluster size"
+    return 0
+  fi
+  echo "Found $BOOT_PART with $CLUSTER_BYTES bytes per cluster"
+  if [ "$CLUSTER_BYTES" -lt 1024 ]; then
+    echo "Adding 'flush' option to boot partition, if not present..."
+    sed -i '/flush/!s#\(\s/boot\s.*defaults\S*\) \{0,7\}#\1,flush #' /etc/fstab
+  else
+    echo "Removing 'flush' option from boot partition, if present..."
+    sed -i '/\s\/boot\s.*,flush/s#,flush#      #' /etc/fstab
+  fi
+}
+
 case "${1}" in
   configure)
     if dpkg --compare-versions "${2}" lt-nl "20210928"; then
@@ -31,10 +53,9 @@ case "${1}" in
       echo "Removing vscode repo stubs..."
       remove_ms_stubs
     fi
-    if dpkg --compare-versions "${2}" lt-nl "20220224" && \
+    if dpkg --compare-versions "${2}" lt-nl "20220809" && \
         [ "$(dpkg --print-architecture | grep -o '^.\{3\}')" = "arm" ]; then
-      echo "Adding 'flush' option to boot partition..."
-      sed -i 's/^\(.* \/boot .*defaults\) \{6\}\(.*\)$/\1,flush\2/' /etc/fstab
+      add_remove_flush_option
     fi
     ;;
 

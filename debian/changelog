@@ -1,6 +1,7 @@
 raspberrypi-sys-mods (20220809) bullseye; urgency=medium
 
   * Add customisation helper for rpi-imager
+  * Improve 'flush' option handling
 
  -- Serge Schneider <serge@raspberrypi.com>  Tue, 09 Aug 2022 11:27:22 +0100
 
