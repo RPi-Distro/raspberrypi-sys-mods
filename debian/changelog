@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20220901) bullseye; urgency=medium
+
+  * Add support for headless configuration via config.toml
+  * Modify SSH host key regen service to run a dedicated script
+  * Add 'firstboot' init script from raspi-config's init_resize.sh
+
+ -- Serge Schneider <serge@raspberrypi.com>  Thu, 01 Sep 2022 16:20:13 +0100
+
 raspberrypi-sys-mods (20220809) bullseye; urgency=medium
 
   * Add customisation helper for rpi-imager

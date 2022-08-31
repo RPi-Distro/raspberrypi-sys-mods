@@ -13,11 +13,17 @@ usage () {
       set_hostname)
         echo "  $0 set_hostname HOSTNAME"
         ;;
+      import_ssh_id)
+        echo "  $0 import_ssh_id USERID1 [USERID2]..."
+        ;;
       enable_ssh)
-        echo "  $0 enable_ssh [-k|--key-only] [KEY_LINE1 [KEY_LINE2]...]"
+        echo "  $0 enable_ssh [-k|--key-only]|[-p|--pass-auth] [-d|--disabled] [KEY_LINE1 [KEY_LINE2]...]"
         ;;
       set_wlan)
-        echo "  $0 set_wlan [-h|--hidden] SSID [PASS [COUNTRY]]"
+        echo "  $0 set_wlan [-h|--hidden] [-p|--plain] SSID [PASS [COUNTRY]]"
+        ;;
+      set_wlan_country)
+        echo "  $0 set_wlan_country COUNTRY]"
         ;;
       set_keymap)
         echo "  $0 set_keymap KEYMAP"
@@ -39,28 +45,53 @@ set_hostname () (
   echo "$HOSTNAME" > /etc/hostname
 )
 
-enable_ssh () (
-  FIRSTUSER=$(getent passwd 1000 | cut -d: -f1)
-  FIRSTUSERHOME=$(getent passwd 1000 | cut -d: -f6)
-  SSH_DIR="$FIRSTUSERHOME/.ssh"
-  AUTHORISED_KEYS_FILE="$SSH_DIR/authorized_keys"
-  SED_STR='s/^[#\s]*PasswordAuthentication\s\+\S\+$/PasswordAuthentication no/'
-  for arg in "$@"; do
-    if [ "$arg" = "-k" ] || [ "$arg" = "--key-only" ]; then
-      sed -i "$SED_STR" /etc/ssh/sshd_config
-    else
-      if ! [ -d "$SSH_DIR" ]; then
-        install -o "$FIRSTUSER" -g "$FIRSTUSER" -m 700 -d "$SSH_DIR"
-      fi
-      echo "$arg" >> "$AUTHORISED_KEYS_FILE"
-    fi
+FIRSTUSER=$(getent passwd 1000 | cut -d: -f1)
+FIRSTUSERHOME=$(getent passwd 1000 | cut -d: -f6)
+SSH_DIR="$FIRSTUSERHOME/.ssh"
+AUTHORISED_KEYS_FILE="$SSH_DIR/authorized_keys"
+
+add_ssh_keys () (
+  if ! [ -d "$SSH_DIR" ]; then
+    install -o "$FIRSTUSER" -g "$FIRSTUSER" -m 700 -d "$SSH_DIR"
+  fi
+  for key in "$@"; do
+    echo "$arg" >> "$AUTHORISED_KEYS_FILE"
   done
   if [ -f "$AUTHORISED_KEYS_FILE" ]; then
     chmod 600 "$AUTHORISED_KEYS_FILE"
     chown "$FIRSTUSER:$FIRSTUSER" "$AUTHORISED_KEYS_FILE"
   fi
-  systemctl enable ssh
 )
+
+enable_ssh () (
+  ENABLE=1
+  KEY_ONLY_SED_STR='s/^[#\s]*PasswordAuthentication\s\+\S\+$/PasswordAuthentication no/'
+  PASSAUTH_SED_STR='s/^[#\s]*PasswordAuthentication\s\+\S\+$/PasswordAuthentication yes/'
+  for arg in "$@"; do
+    if [ "$arg" = "-k" ] || [ "$arg" = "--key-only" ]; then
+      sed -i "$KEY_ONLY_SED_STR" /etc/ssh/sshd_config
+    elif [ "$arg" = "-p" ] || [ "$arg" = "--pass-auth" ]; then
+      sed -i "$KEY_ONLY_SED_STR" /etc/ssh/sshd_config
+    elif [ "$arg" = "-d" ] || [ "$arg" = "--disabled" ]; then
+      ENABLE=0
+    else
+      add_ssh_keys "$arg"
+    fi
+  done
+  if [ "$ENABLE" = 1 ]; then
+    systemctl -q enable ssh
+  fi
+)
+
+set_wlan_country () (
+  if [ "$#" -ne 1 ]; then
+    usage set_wlan_country
+    exit 1
+  fi
+  COUNTRY="$1"
+  raspi-config nonint do_wifi_country "$COUNTRY"
+)
+
 
 set_wlan () (
   HIDDEN=0
@@ -90,12 +121,15 @@ set_wlan () (
     echo "Ignoring network configuration: /boot/wpa_supplicant.conf exists"
     exit 0
   fi
+
+  if [ -n "$COUNTRY" ]; then
+    set_wlan_country "$COUNTRY"
+  fi
+
   mkdir -p "$(dirname "$SCRIPT")"
   # shellcheck disable=SC2094
   cat <<- EOF > "$SCRIPT"
 	#!/bin/sh
-	set -e
-	$([ -n "$COUNTRY" ] && echo "raspi-config nonint do_wifi_country \"$COUNTRY\"")
 	COUNTER=0
 	while [ "\$COUNTER" -lt 10 ]; do
 	  COUNTER=\$((COUNTER + 1))
@@ -126,14 +160,68 @@ set_wlan () (
   cat <<- EOF > /etc/systemd/system/set-wlan.service
 		[Unit]
 		Description=Configure WLAN for rpi-imager
-		After=NetworkManager.service
-		ConditionPathIsDirectory=/run/wpa_supplicant
+		After=NetworkManager.service dhcpcd.service
+		ConditionPathIsDirectory=|/run/wpa_supplicant
+		ConditionPathExists=|/run/dhcpcd.pid
 		[Service]
 		Type=oneshot
 		ExecStart=$SCRIPT
 	EOF
   ln -f -s /etc/systemd/system/set-wlan.timer \
   /etc/systemd/system/timers.target.wants/set-wlan.timer
+)
+
+import_ssh_id () (
+  SCRIPT='/var/lib/raspberrypi-sys-mods/import-ssh'
+  if [ "$#" -eq 0 ]; then
+    usage import_ssh_id
+    exit 1
+  fi
+  if ! command -v ssh-import-id > /dev/null; then
+    echo "ssh-import-id not available"
+    exit 1
+  fi
+  mkdir -p "$(dirname "$SCRIPT")"
+  # shellcheck disable=SC2094
+  cat <<- EOF > "$SCRIPT"
+	#!/bin/sh
+	COUNTER=0
+	while [ "\$COUNTER" -lt 10 ]; do
+	  COUNTER=\$((COUNTER + 1))
+	  if runuser -u \$(getent passwd 1000 | cut -d: -f1) -- ssh-import-id $@; then
+	    break
+	  fi
+	  sleep 5
+	done
+	systemctl stop import-ssh.timer
+	systemctl disable import-ssh.timer
+	rm -f "\$0"
+	rm -f /etc/systemd/system/import-ssh.timer
+	rm -f /etc/systemd/system/import-ssh.service
+	rmdir --ignore-fail-on-non-empty "$(dirname "$SCRIPT")"
+	EOF
+  chmod 700 "$SCRIPT"
+
+  cat <<- EOF > /etc/systemd/system/import-ssh.timer
+		[Unit]
+		Description=Import SSH keys using ssh-import-id
+		[Timer]
+		OnBootSec=1
+		OnUnitActiveSec=10
+		[Install]
+		WantedBy=timers.target
+	EOF
+
+  cat <<- EOF > /etc/systemd/system/import-ssh.service
+		[Unit]
+		Description=Import SSH keys using ssh-import-id
+		After=network-online.target userconfig.service
+		[Service]
+		Type=oneshot
+		ExecStart=$SCRIPT
+	EOF
+  ln -f -s /etc/systemd/system/import-ssh.timer \
+  /etc/systemd/system/timers.target.wants/import-ssh.timer
 )
 
 set_keymap () (
@@ -160,7 +248,7 @@ fi
 
 command="$1"; shift
 case "$command" in
-  set_hostname|enable_ssh|set_wlan|set_keymap|set_timezone)
+  set_hostname|import_ssh_id|enable_ssh|set_wlan_country|set_wlan|set_keymap|set_timezone)
     "$command" "$@"
     ;;
   *)

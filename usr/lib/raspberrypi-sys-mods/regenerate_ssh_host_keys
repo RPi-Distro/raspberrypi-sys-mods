@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+if [ -c /dev/hwrng ]; then
+  dd if=/dev/hwrng of=/dev/urandom count=1 bs=4096 status=none
+fi
+rm -f /etc/ssh/ssh_host_*_key*
+ssh-keygen -A > /dev/null
+systemctl -q disable regenerate_ssh_host_keys
