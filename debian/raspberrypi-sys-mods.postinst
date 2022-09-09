@@ -11,9 +11,9 @@ remove_ms_stubs () {
 
 add_remove_flush_option () {
   echo "Checking if boot partition needs 'flush' option..."
-  BOOT_PART="$(findmnt -f -n -o SOURCE -t vfat /boot)"
+  BOOT_PART="$(findmnt -f -n -o SOURCE -t vfat /boot || true)"
   if [ -z "$BOOT_PART" ]; then
-    echo "Could find suitable boot partition"
+    echo "Could not find suitable boot partition"
     return 0
   fi
   CLUSTER_BYTES=$(fsck.vfat -n -v "$BOOT_PART" | sed -n 's/^[^0-9]*\([0-9]\+\) bytes per cluster$/\1/p')
