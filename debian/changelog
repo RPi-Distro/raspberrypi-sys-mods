@@ -1,7 +1,8 @@
-raspberrypi-sys-mods (20220909) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20220909) bullseye; urgency=medium
 
   * Fix add_remove_flush_option behaviour when no boot partition is found
     - https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/63
+  * Remove unnecessary test code and resulting file
 
  -- Serge Schneider <serge@raspberrypi.com>  Fri, 09 Sep 2022 16:55:15 +0100
 

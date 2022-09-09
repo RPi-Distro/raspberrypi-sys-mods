@@ -158,7 +158,6 @@ resizefs () {
   mount -o remount,rw /
   resize2fs "$ROOT_PART_DEV" > /dev/null 2>&1
   RET="$?"
-  df -h / > /test.log
   mount -o remount,ro /
   return "$RET"
 }
