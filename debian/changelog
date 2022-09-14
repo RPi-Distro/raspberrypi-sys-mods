@@ -1,3 +1,16 @@
+raspberrypi-sys-mods (20220914~rc1) UNRELEASED; urgency=medium
+
+  * Add python3-toml as a recommended package and add a check for it
+    - https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/65
+  * Remove checks for specific commands
+    - Essential packages are expected to always be present
+    - The rest have been added as dependencies
+  * Skip resize but continue with everything else if partition layout is
+    unexpected
+    - https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/64
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 14 Sep 2022 11:57:53 +0100
+
 raspberrypi-sys-mods (20220909) bullseye; urgency=medium
 
   * Fix add_remove_flush_option behaviour when no boot partition is found

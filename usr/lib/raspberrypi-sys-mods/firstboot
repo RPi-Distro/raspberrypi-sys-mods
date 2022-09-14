@@ -17,21 +17,6 @@ reboot_pi () {
   exit 0
 }
 
-check_commands () {
-  if ! command -v whiptail > /dev/null; then
-      echo "whiptail not found"
-      sleep 5
-      return 1
-  fi
-  for COMMAND in grep cut sed parted fdisk findmnt; do
-    if ! command -v $COMMAND > /dev/null; then
-      FAIL_REASON="$COMMAND not found"
-      return 1
-    fi
-  done
-  return 0
-}
-
 check_noobs () {
   if [ "$BOOT_PART_NUM" = "1" ]; then
     NOOBS=0
@@ -116,28 +101,27 @@ check_variables () {
     if [ "$EXT_PART_NUM" -gt 4 ] || \
        [ "$EXT_PART_START" -gt "$ROOT_PART_START" ] || \
        [ "$EXT_PART_END" -lt "$ROOT_PART_END" ]; then
-      FAIL_REASON="Unsupported extended partition"
+      FAIL_REASON="Unsupported extended partition\n$FAIL_REASON"
       return 1
     fi
   fi
 
-  if [ "$BOOT_DEV_NAME" != "$ROOT_DEV_NAME" ]; then
-      FAIL_REASON="Boot and root partitions are on different devices"
-      return 1
-  fi
-
   if [ "$ROOT_PART_NUM" -ne "$LAST_PART_NUM" ]; then
-    FAIL_REASON="Root partition should be last partition"
+    # Skip resize if root partition is not last
     return 1
   fi
 
   if [ "$ROOT_PART_END" -gt "$TARGET_END" ]; then
-    FAIL_REASON="Root partition runs past the end of device"
+    FAIL_REASON="Root partition runs past the end of device\n$FAIL_REASON"
     return 1
   fi
 
   if [ ! -b "$ROOT_DEV" ] || [ ! -b "$ROOT_PART_DEV" ] || [ ! -b "$BOOT_PART_DEV" ] ; then
-    FAIL_REASON="Could not determine partitions"
+    FAIL_REASON="Could not determine partitions\n$FAIL_REASON"
+    return 1
+  fi
+  if [ "$ROOT_PART_END" -eq "$TARGET_END" ]; then
+    # Root partition already the expected size
     return 1
   fi
 }
@@ -154,10 +138,37 @@ check_kernel () {
   NEW_KERNEL=1
 }
 
-resizefs () {
+do_resize () {
+  check_kernel
+
+  if [ "$NOOBS" = "1" ] && [ "$NEW_KERNEL" != "1" ]; then
+    BCM_MODULE=$(grep -e "^Hardware" /proc/cpuinfo | cut -d ":" -f 2 | tr -d " " | tr '[:upper:]' '[:lower:]')
+    if ! modprobe "$BCM_MODULE"; then
+      FAIL_REASON="Couldn't load BCM module $BCM_MODULE\n$FAIL_REASON"
+      return 1
+    fi
+  fi
+
+  whiptail --infobox "Resizing root filesystem...\n\nDepending on storage size and speed, this may take a while." 20 60
+  if [ "$NOOBS" = "1" ]; then
+    if ! printf "resizepart %s\nyes\n%ss\n" "$EXT_PART_NUM" "$TARGET_END" | parted "$ROOT_DEV" ---pretend-input-tty; then
+      FAIL_REASON="Extended partition resize failed\n$FAIL_REASON"
+      return 1
+    fi
+  fi
+
+  if ! parted -m "$ROOT_DEV" u s resizepart "$ROOT_PART_NUM" "$TARGET_END"; then
+    FAIL_REASON="Partition table resize of the root partition ($ROOT_PART_DEV) failed\n$FAIL_REASON"
+    return 1
+  fi
+
   mount -o remount,rw /
   resize2fs "$ROOT_PART_DEV" > /dev/null 2>&1
   RET="$?"
+  if [ "$RET" -ne 0 ]; then
+    FAIL_REASON="Root partition resize failed\n$FAIL_REASON"
+  fi
+
   mount -o remount,ro /
   return "$RET"
 }
@@ -174,9 +185,11 @@ apply_custom () {
   CONFIG_FILE="$1"
   mount -o remount,rw /
   mount -o remount,rw /boot
-  if ! /usr/lib/raspberrypi-sys-mods/init_config "$CONFIG_FILE" 2>&1 | tee /run/firstboot.log; then
+  if ! python3 -c "import toml" 2> /dev/null; then
+    FAIL_REASON="custom.toml provided, but python3-toml is not installed\n$FAIL_REASON"
+  elif ! /usr/lib/raspberrypi-sys-mods/init_config "$CONFIG_FILE" 2>&1 | tee /run/firstboot.log; then
     mv /run/firstboot.log /var/log/firstboot.log
-    FAIL_REASON="Failed to apply customisations from custom.toml\n\nLog file saved as /var/log/firstboot.log"
+    FAIL_REASON="Failed to apply customisations from custom.toml\n\nLog file saved as /var/log/firstboot.log\n$FAIL_REASON"
   fi
   rm -f "$CONFIG_FILE"
   mount -o remount,ro /boot
@@ -186,44 +199,12 @@ apply_custom () {
 main () {
   get_variables
 
-  if ! check_variables; then
-    return 1
+  if check_variables; then
+    do_resize
   fi
 
   # Switch to dhcpcd here if Imager < v1.7.3 was used to generate firstrun.sh
   fix_wpa > /dev/null 2>&1
-
-  check_kernel
-
-  if [ "$NOOBS" = "1" ] && [ "$NEW_KERNEL" != "1" ]; then
-    BCM_MODULE=$(grep -e "^Hardware" /proc/cpuinfo | cut -d ":" -f 2 | tr -d " " | tr '[:upper:]' '[:lower:]')
-    if ! modprobe "$BCM_MODULE"; then
-      FAIL_REASON="Couldn't load BCM module $BCM_MODULE"
-      return 1
-    fi
-  fi
-
-  if [ "$ROOT_PART_END" -eq "$TARGET_END" ]; then
-    reboot_pi
-  fi
-
-  whiptail --infobox "Resizing root filesystem...\n\nDepending on storage size and speed, this may take a while." 20 60
-  if [ "$NOOBS" = "1" ]; then
-    if ! printf "resizepart %s\nyes\n%ss\n" "$EXT_PART_NUM" "$TARGET_END" | parted "$ROOT_DEV" ---pretend-input-tty; then
-      FAIL_REASON="Extended partition resize failed"
-      return 1
-    fi
-  fi
-
-  if ! parted -m "$ROOT_DEV" u s resizepart "$ROOT_PART_NUM" "$TARGET_END"; then
-    FAIL_REASON="Partition table resize of the root partitio ($ROOT_PART_DEV) failed"
-    return 1
-  fi
-
-  if ! resizefs; then
-    FAIL_REASON="Root partition resize failed"
-    return 1
-  fi
 
   whiptail --infobox "Generating SSH keys..." 20 60
   regenerate_ssh_host_keys
@@ -237,7 +218,7 @@ main () {
         whiptail --infobox "$MSG" 20 60
     done
     if [ "$?" -ne 0 ]; then
-      FAIL_REASON="Failed to apply customisations from custom.toml"
+      FAIL_REASON="Failed to apply customisations from custom.toml\n$FAIL_REASON"
     fi
     set +o pipefail
   fi
@@ -264,17 +245,13 @@ fi
 mount /boot -o remount,ro
 sync
 
-if ! check_commands; then
-  reboot_pi
-fi
-
 main
 
 if [ -z "$FAIL_REASON" ]; then
   whiptail --infobox "Rebooting in 5 seconds..." 20 60
   sleep 5
 else
-  whiptail --msgbox "Failed running firstboot\n${FAIL_REASON}" 20 60
+  whiptail --msgbox "Failed running firstboot:\n${FAIL_REASON}" 20 60
 fi
 
 reboot_pi
