@@ -19,18 +19,17 @@ case "$1" in
     purge|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
     ;;
     remove)
-    eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
-    CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
-    eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
-    CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
-    if ! [ -s "$CODE_TRUSTED_PART" ] && [ -f "$CODE_TRUSTED_PART" ]; then
-        rm "$CODE_TRUSTED_PART" ||:
-    fi
-    if ! grep -vsq '^\s*$\|^\s*#' "$CODE_SOURCE_PART" && [ -f "$CODE_SOURCE_PART"  ]; then
-        rm "$CODE_SOURCE_PART" ||:
-    fi
-
-    ;;
+        eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
+        CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
+        eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
+        CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
+        if ! [ -s "$CODE_TRUSTED_PART" ] && [ -f "$CODE_TRUSTED_PART" ]; then
+            rm "$CODE_TRUSTED_PART" ||:
+        fi
+        if ! grep -vsq '^\s*$\|^\s*#' "$CODE_SOURCE_PART" && [ -f "$CODE_SOURCE_PART"  ]; then
+            rm "$CODE_SOURCE_PART" ||:
+        fi
+        ;;
     *)
         echo "postrm called with unknown argument \`$1'" >&2
         exit 1

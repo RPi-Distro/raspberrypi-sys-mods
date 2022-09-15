@@ -11,6 +11,8 @@ raspberrypi-sys-mods (20220914~rc1) UNRELEASED; urgency=medium
   * If firstrun.sh calls userconf, skip it in init_config
     - If userconf runs twice without using rename-user, autologin behaviour is
       not preserved
+  * Tidy up services
+    - https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/59
 
  -- Serge Schneider <serge@raspberrypi.com>  Wed, 14 Sep 2022 11:57:53 +0100
 
