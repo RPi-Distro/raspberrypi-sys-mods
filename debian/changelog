@@ -8,6 +8,9 @@ raspberrypi-sys-mods (20220914~rc1) UNRELEASED; urgency=medium
   * Skip resize but continue with everything else if partition layout is
     unexpected
     - https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/64
+  * If firstrun.sh calls userconf, skip it in init_config
+    - If userconf runs twice without using rename-user, autologin behaviour is
+      not preserved
 
  -- Serge Schneider <serge@raspberrypi.com>  Wed, 14 Sep 2022 11:57:53 +0100
 
