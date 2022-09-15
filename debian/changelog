@@ -13,6 +13,7 @@ raspberrypi-sys-mods (20220914~rc1) UNRELEASED; urgency=medium
       not preserved
   * Tidy up services
     - https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/59
+  * postinst - continue if /etc/rpi-issue doesn't exist
 
  -- Serge Schneider <serge@raspberrypi.com>  Wed, 14 Sep 2022 11:57:53 +0100
 

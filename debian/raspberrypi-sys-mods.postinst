@@ -58,7 +58,7 @@ case "${1}" in
       add_remove_flush_option
     fi
     if dpkg --compare-versions "${2}" lt-nl "20220909"; then
-      IMG_VER="$(grep -s -m1 -o '[[:digit:]]\{4\}-[[:digit:]]\{2\}-[[:digit:]]\{2\}' /etc/rpi-issue)"
+      IMG_VER="$(grep -s -m1 -o '[[:digit:]]\{4\}-[[:digit:]]\{2\}-[[:digit:]]\{2\}' /etc/rpi-issue || true)"
       if [ "$IMG_VER" = "2022-09-06" ] && [ -f /test.log ]; then
         rm -f /test.log
       fi
