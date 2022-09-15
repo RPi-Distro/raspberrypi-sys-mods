@@ -1,4 +1,4 @@
-raspberrypi-sys-mods (20220914~rc1) UNRELEASED; urgency=medium
+raspberrypi-sys-mods (20220915) bullseye; urgency=medium
 
   * Add python3-toml as a recommended package and add a check for it
     - https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/65
@@ -16,7 +16,7 @@ raspberrypi-sys-mods (20220914~rc1) UNRELEASED; urgency=medium
   * postinst - continue if /etc/rpi-issue doesn't exist
   * Fix apply_custom error handling
 
- -- Serge Schneider <serge@raspberrypi.com>  Wed, 14 Sep 2022 11:57:53 +0100
+ -- Serge Schneider <serge@raspberrypi.com>  Thu, 15 Sep 2022 13:46:12 +0100
 
 raspberrypi-sys-mods (20220909) bullseye; urgency=medium
 
