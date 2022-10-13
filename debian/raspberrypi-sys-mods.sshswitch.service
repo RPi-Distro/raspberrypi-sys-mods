@@ -1,8 +1,7 @@
 [Unit]
 Description=Turn on SSH if /boot/ssh is present
 ConditionPathExistsGlob=/boot/ssh{,.txt}
-After=regenerate_ssh_host_keys.service
-After=boot.mount
+After=regenerate_ssh_host_keys.service boot.mount
 
 [Service]
 Type=oneshot
