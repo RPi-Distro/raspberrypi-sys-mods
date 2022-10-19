@@ -1,3 +1,13 @@
+raspberrypi-sys-mods (20221019) bullseye; urgency=medium
+
+  [ hungryhorace ]
+  * Add boot.mount as order dependency for sshswitch (#67)
+
+  [ Serge Schneider ]
+  * init_config: don't attempt to configure wlan if not set
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 19 Oct 2022 15:56:33 +0100
+
 raspberrypi-sys-mods (20220915) bullseye; urgency=medium
 
   * Add python3-toml as a recommended package and add a check for it
