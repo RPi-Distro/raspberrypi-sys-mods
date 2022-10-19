@@ -76,10 +76,10 @@ def import_ssh_id(ids):
         logging.error("Failed to import pubkeys for %s", ", ".join(ids))
 
 def config_ssh (ssh_config):
-    ssh_import_id = ssh_config.pop("ssh_import_id", None)
-    import_ssh_id(ssh_import_id)
     if not ssh_config:
         return
+    ssh_import_id = ssh_config.pop("ssh_import_id", None)
+    import_ssh_id(ssh_import_id)
     cmd = (imager_custom_path, "enable_ssh")
     ssh_enabled = ssh_config.pop("enabled", False)
     ssh_password_authentication = ssh_config.pop("password_authentication", None)
@@ -104,6 +104,8 @@ def wpa_passphrase (ssid, passphrase):
     return next(psks)
 
 def config_wlan (wlan_config):
+    if not wlan_config:
+        return
     wlan_ssid = wlan_config.pop("ssid", None)
     wlan_password = wlan_config.pop("password", None)
     wlan_password_is_encrypted = wlan_config.pop("password_encrypted", True)
