@@ -71,7 +71,7 @@ enable_ssh () (
     if [ "$arg" = "-k" ] || [ "$arg" = "--key-only" ]; then
       sed -i "$KEY_ONLY_SED_STR" /etc/ssh/sshd_config
     elif [ "$arg" = "-p" ] || [ "$arg" = "--pass-auth" ]; then
-      sed -i "$KEY_ONLY_SED_STR" /etc/ssh/sshd_config
+      sed -i "$PASSAUTH_SED_STR" /etc/ssh/sshd_config
     elif [ "$arg" = "-d" ] || [ "$arg" = "--disabled" ]; then
       ENABLE=0
     else
