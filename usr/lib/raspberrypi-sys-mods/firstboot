@@ -63,7 +63,7 @@ get_variables () {
 fix_partuuid() {
   mount -o remount,rw "$ROOT_PART_DEV"
   mount -o remount,rw "$BOOT_PART_DEV"
-  DISKID="$(tr -dc 'a-f0-9' < /dev/hwrng | dd bs=1 count=8 2>/dev/null)"
+  DISKID="$(dd if=/dev/hwrng bs=4 count=1 status=none | od -An -tx4 | cut -c2-9)"
   fdisk "$ROOT_DEV" > /dev/null <<EOF
 x
 i
@@ -223,6 +223,7 @@ main () {
     apply_custom "/boot/custom.toml"
   fi
 
+  whiptail --infobox "Fix PARTUUID..." 20 60
   fix_partuuid
 
   return 0
