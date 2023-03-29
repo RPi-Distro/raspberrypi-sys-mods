@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20230329) bullseye; urgency=medium
+
+  [ Stephan Wendel ]
+  * refactor: refactor generate DISKID
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 29 Mar 2023 07:36:20 +0100
+
 raspberrypi-sys-mods (20221019) bullseye; urgency=medium
 
   [ hungryhorace ]
