@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20230509) bookworm; urgency=medium
+
+  * Allow sudo group to access /sys/kernel/debug
+
+ -- Simon Long <simon@raspberrypi.com>  Tue, 09 May 2023 15:00:22 +0100
+
 raspberrypi-sys-mods (20230329) bullseye; urgency=medium
 
   [ Stephan Wendel ]
