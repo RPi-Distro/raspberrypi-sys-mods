@@ -126,6 +126,10 @@ set_wlan () (
     set_wlan_country "$COUNTRY"
   fi
 
+  # Replace ' with '\'' in SSID and PASS to support single-quote characters
+  SSID=$(printf '%s' "$SSID" | sed "s/'/'\\\\''/g")
+  PASS=$(printf '%s' "$PASS" | sed "s/'/'\\\\''/g")
+
   mkdir -p "$(dirname "$SCRIPT")"
   # shellcheck disable=SC2094
   cat <<- EOF > "$SCRIPT"
@@ -133,7 +137,7 @@ set_wlan () (
 	COUNTER=0
 	while [ "\$COUNTER" -lt 10 ]; do
 	  COUNTER=\$((COUNTER + 1))
-	  if raspi-config nonint do_wifi_ssid_passphrase  "$SSID" "$PASS" "$HIDDEN" "$PLAIN"; then
+	  if raspi-config nonint do_wifi_ssid_passphrase  '$SSID' '$PASS' '$HIDDEN' '$PLAIN'; then
 	    break
 	  fi
 	  sleep 5
@@ -143,7 +147,7 @@ set_wlan () (
 	rm -f "\$0"
 	rm -f /etc/systemd/system/set-wlan.timer
 	rm -f /etc/systemd/system/set-wlan.service
-	rmdir --ignore-fail-on-non-empty "$(dirname "$SCRIPT")"
+	rmdir --ignore-fail-on-non-empty '$(dirname "$SCRIPT")'
 	EOF
   chmod 700 "$SCRIPT"
 
