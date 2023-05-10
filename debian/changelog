@@ -1,3 +1,13 @@
+raspberrypi-sys-mods (20230510~bullseye) bullseye; urgency=medium
+
+  [ MichaIng ]
+  * Support all characters in WiFi SSID and key from rpi-imager
+
+  [ Serge Schneider ]
+  * Fix issues reported by shellcheck
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 10 May 2023 07:38:35 +0100
+
 raspberrypi-sys-mods (20230329) bullseye; urgency=medium
 
   [ Stephan Wendel ]
