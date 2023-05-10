@@ -55,7 +55,7 @@ add_ssh_keys () (
     install -o "$FIRSTUSER" -g "$FIRSTUSER" -m 700 -d "$SSH_DIR"
   fi
   for key in "$@"; do
-    echo "$arg" >> "$AUTHORISED_KEYS_FILE"
+    echo "$key" >> "$AUTHORISED_KEYS_FILE"
   done
   if [ -f "$AUTHORISED_KEYS_FILE" ]; then
     chmod 600 "$AUTHORISED_KEYS_FILE"
@@ -71,7 +71,7 @@ enable_ssh () (
     if [ "$arg" = "-k" ] || [ "$arg" = "--key-only" ]; then
       sed -i "$KEY_ONLY_SED_STR" /etc/ssh/sshd_config
     elif [ "$arg" = "-p" ] || [ "$arg" = "--pass-auth" ]; then
-      sed -i "$KEY_ONLY_SED_STR" /etc/ssh/sshd_config
+      sed -i "$PASSAUTH_SED_STR" /etc/ssh/sshd_config
     elif [ "$arg" = "-d" ] || [ "$arg" = "--disabled" ]; then
       ENABLE=0
     else
@@ -88,6 +88,7 @@ set_wlan_country () (
     usage set_wlan_country
     exit 1
   fi
+  # shellcheck disable=SC2030
   COUNTRY="$1"
   raspi-config nonint do_wifi_country "$COUNTRY"
 )
@@ -98,6 +99,7 @@ set_wlan () (
   PLAIN=0
   SCRIPT='/var/lib/raspberrypi-sys-mods/set-wlan'
   for arg in "$@"; do
+    # shellcheck disable=SC2031
     if [ "$arg" = "-h" ] || [ "$arg" = "--hidden" ]; then
       HIDDEN=1
     elif [ "$arg" = "-p" ] || [ "$arg" = "--plain" ]; then
