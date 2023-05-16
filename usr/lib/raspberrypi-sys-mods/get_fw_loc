@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [ -r /etc/default/raspberrypi-sys-mods ]; then
+  . /etc/default/raspberrypi-sys-mods
+fi
+
+if [ -z "$FWLOC" ]; then
+  for FWLOC in /boot /boot/firmware NOT_FOUND; do
+    if findmnt --fstab "$FWLOC" > /dev/null; then
+      break
+    fi
+  done
+fi
+
+echo "$FWLOC"
+
+if [ "$FWLOC" = "NOT_FOUND" ]; then
+  exit 1
+fi
+
+exit 0

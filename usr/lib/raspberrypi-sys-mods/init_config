@@ -33,10 +33,11 @@ def rename_user(name, password, is_encrypted=True):
     if not name and not password:
         return
     try:
-        with open('/boot/firstrun.sh', 'r') as f:
-            if '/usr/lib/userconf-pi/userconf' in f.read():
-                logging.error ("User configuration skipped: conflicts with firstrun.sh")
-                return
+        for frloc in ('/boot/firstrun.sh', '/boot/firmware/firstrun.sh'):
+            with open(frloc, 'r') as f:
+                if '/usr/lib/userconf-pi/userconf' in f.read():
+                    logging.error ("User configuration skipped: conflicts with firstrun.sh")
+                    return
     except FileNotFoundError:
         pass
     if not name:

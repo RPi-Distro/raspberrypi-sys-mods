@@ -119,10 +119,13 @@ set_wlan () (
     usage set_wlan
     exit 1
   fi
-  if [ -e /boot/wpa_supplicant.conf ]; then
-    echo "Ignoring network configuration: /boot/wpa_supplicant.conf exists"
-    exit 0
-  fi
+
+  for wpaconf in /boot/wpa_supplicant.conf /boot/firmware/wpa_supplicant.conf; do
+    if [ -e "$wpaconf" ]; then
+      echo "Ignoring network configuration: $wpaconf exists"
+      exit 0
+    fi
+  done
 
   if [ -n "$COUNTRY" ]; then
     set_wlan_country "$COUNTRY"

@@ -1,0 +1,7 @@
+# Specify location of Raspberry Pi firmware partition
+# This variable is read by /usr/lib/raspberrypi-sys-mods/get_fw_loc, which is
+# used to avoid hard-coding the location in multiple places.
+# If unset, it's autodetected by checking /etc/fstab for /boot/firmware/ or
+# /boot/ mountpoints.
+
+#FWLOC=

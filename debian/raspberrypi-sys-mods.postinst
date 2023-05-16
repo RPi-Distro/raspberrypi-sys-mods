@@ -1,68 +1,7 @@
 #!/bin/sh -e
 
-remove_ms_stubs () {
-  eval "$(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)"
-  CODE_SOURCE_PART="${APT_SOURCE_PARTS}vscode.list"
-  eval "$(apt-config shell APT_TRUSTED_PARTS Dir::Etc::trustedparts/d)"
-  CODE_TRUSTED_PART="${APT_TRUSTED_PARTS}microsoft.gpg"
-  grep -qsv '^[[:space:]]*#' "$CODE_SOURCE_PART" || rm -f "$CODE_SOURCE_PART" ||:
-  grep -qsv '^[[:space:]]*#' "$CODE_TRUSTED_PART" || rm -f "$CODE_TRUSTED_PART" ||:
-}
-
-add_remove_flush_option () {
-  echo "Checking if boot partition needs 'flush' option..."
-  BOOT_PART="$(findmnt -f -n -o SOURCE -t vfat /boot || true)"
-  if [ -z "$BOOT_PART" ]; then
-    echo "Could not find suitable boot partition"
-    return 0
-  fi
-  CLUSTER_BYTES=$(fsck.vfat -n -v "$BOOT_PART" | sed -n 's/^[^0-9]*\([0-9]\+\) bytes per cluster$/\1/p')
-  if [ -z "$CLUSTER_BYTES" ]; then
-    echo "Could not determine cluster size"
-    return 0
-  fi
-  echo "Found $BOOT_PART with $CLUSTER_BYTES bytes per cluster"
-  if [ "$CLUSTER_BYTES" -lt 1024 ]; then
-    echo "Adding 'flush' option to boot partition, if not present..."
-    sed -i '/flush/!s#\(\s/boot\s.*defaults\S*\) \{0,7\}#\1,flush #' /etc/fstab
-  else
-    echo "Removing 'flush' option from boot partition, if present..."
-    sed -i '/\s\/boot\s.*,flush/s#,flush#      #' /etc/fstab
-  fi
-}
-
 case "${1}" in
   configure)
-    if dpkg --compare-versions "${2}" lt-nl "20210928"; then
-      if [ -f /etc/systemd/system/dhcpcd.service.d/wait.conf ]; then
-        echo "Fixing previous dhcpcd path in wait.conf drop-in..."
-        sed -i 's|lib/dhcpcd5|sbin|' /etc/systemd/system/dhcpcd.service.d/wait.conf
-      fi
-      if [ "$(readlink -f /etc/systemd/network/99-default.link)" = "/dev/null" ]; then
-        echo "Fixing predictable interface names..."
-        ln -sf /dev/null /etc/systemd/network/73-usb-net-by-mac.link
-      fi
-    fi
-    if dpkg --compare-versions "${2}" lt-nl "20220110+1"; then
-      if [ -f /etc/systemd/system/dhcpcd.service.d/wait.conf ]; then
-        echo "Fixing previous dhcpcd wait.conf drop-in to prevent double logging..."
-        sed -i 's|dhcpcd -w$|dhcpcd -w -q|' /etc/systemd/system/dhcpcd.service.d/wait.conf
-      fi
-    fi
-    if dpkg --compare-versions "${2}" lt-nl "20220106"; then
-      echo "Removing vscode repo stubs..."
-      remove_ms_stubs
-    fi
-    if dpkg --compare-versions "${2}" lt-nl "20220809" && \
-        [ "$(dpkg --print-architecture | grep -o '^.\{3\}')" = "arm" ]; then
-      add_remove_flush_option
-    fi
-    if dpkg --compare-versions "${2}" lt-nl "20220909"; then
-      IMG_VER="$(grep -s -m1 -o '[[:digit:]]\{4\}-[[:digit:]]\{2\}-[[:digit:]]\{2\}' /etc/rpi-issue || true)"
-      if [ "$IMG_VER" = "2022-09-06" ] && [ -f /test.log ]; then
-        rm -f /test.log
-      fi
-    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)

@@ -3,3 +3,4 @@ etc.armhf/* etc
 lib
 usr
 var
+initramfs-tools/ /usr/share/

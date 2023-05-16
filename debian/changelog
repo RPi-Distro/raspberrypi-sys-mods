@@ -1,3 +1,16 @@
+raspberrypi-sys-mods (20230523) bookworm; urgency=medium
+
+  * Remove unnecessary postinst steps
+    - Any upgrade to bookworm should start with an up-to-date bullseye
+      install
+  * Remove NOOBS config support
+    - NOOBS is no longer supported and this feature has not been tested in
+      a long time
+  * Add support for /boot/firmware as the firmware partition mountpoint
+  * Move initial resize to initramfs
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 23 May 2023 17:51:13 +0100
+
 raspberrypi-sys-mods (20230510) bookworm; urgency=medium
 
   [ MichaIng ]
