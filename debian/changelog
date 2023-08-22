@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20230822) bookworm; urgency=medium
+
+  * Remove blacklist-rtl8xxxu.conf
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 22 Aug 2023 18:19:09 +0100
+
 raspberrypi-sys-mods (20230725) bookworm; urgency=medium
 
   [ Simon Long ]
