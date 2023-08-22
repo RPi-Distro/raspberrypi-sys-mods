@@ -3,3 +3,4 @@ rm_conffile /etc/profile.d/wifi-country.sh 20190429
 rm_conffile /etc/modprobe.d/blacklist-rtl8192cu.conf 20190730
 rm_conffile /etc/apt/preferences.d/3rd_parties.pref 20210310
 rm_conffile /etc/modules-load.d/aes-neon.conf 20220224
+rm_conffile /etc/modprobe.d/blacklist-rtl8xxxu.conf 20230822
