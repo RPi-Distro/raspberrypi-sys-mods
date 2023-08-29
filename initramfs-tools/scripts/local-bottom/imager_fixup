@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -ex
+
+case "${1}" in
+  prereqs)
+    exit 0
+    ;;
+esac
+
+. /scripts/functions
+
+if ! grep -q 'systemd\.run=/boot/firstrun\.sh' /proc/cmdline; then
+  exit 0
+fi
+
+if ! BOOT_DEV="$(findmnt -n -o SOURCE -s -F root/etc/fstab /boot/firmware)"; then
+  exit 0
+fi
+
+log_begin_msg "Fixing firstrun.sh..."
+
+mkdir -p /run/imager_fixup
+mount -o rw $(resolve_device "$BOOT_DEV") /run/imager_fixup
+
+sed -i 's|/boot/|/boot/firmware/|g' /run/imager_fixup/cmdline.txt
+sed -n -i '/rm.*firstrun\.sh$/q;p' /run/imager_fixup/firstrun.sh
+cat >> /run/imager_fixup/firstrun.sh << \EOF
+rm -f /boot/firmware/firstrun.sh
+sed -i 's| systemd\.[^ ]*||g' /boot/firmware/cmdline.txt
+exit 0
+EOF
+umount /run/imager_fixup
+rmdir /run/imager_fixup
+
+log_end_msg
+
+exit 0

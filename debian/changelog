@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20230829) bookworm; urgency=medium
+
+  * Add hook to fix Imager's hard-coded /boot paths in customization script
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 29 Aug 2023 11:06:09 +0100
+
 raspberrypi-sys-mods (20230822) bookworm; urgency=medium
 
   * Remove blacklist-rtl8xxxu.conf
