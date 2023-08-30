@@ -46,21 +46,6 @@ EOF
   mount -o remount,ro "$BOOT_PART_DEV"
 }
 
-fix_wpa() {
-  if [ -e "$FWLOC/firstrun.sh" ] \
-     && ! grep -q 'imager_custom set_wlan' "$FWLOC/firstrun.sh" \
-     && grep -q wpa_supplicant.conf "$FWLOC/firstrun.sh"; then
-    mount -o remount,rw "$ROOT_PART_DEV"
-    modprobe rfkill
-    REGDOMAIN=$(sed -n 's/^\s*country=\(..\)$/\1/p' "$FWLOC/firstrun.sh")
-    [ -n "$REGDOMAIN" ] && raspi-config nonint do_wifi_country "$REGDOMAIN"
-    if systemctl -q is-enabled NetworkManager; then
-      systemctl disable NetworkManager
-    fi
-    mount -o remount,ro "$ROOT_PART_DEV"
-  fi
-}
-
 regenerate_ssh_host_keys () {
   mount -o remount,rw /
   /usr/lib/raspberrypi-sys-mods/regenerate_ssh_host_keys

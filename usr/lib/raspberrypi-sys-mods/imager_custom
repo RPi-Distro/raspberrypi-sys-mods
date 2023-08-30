@@ -120,13 +120,6 @@ set_wlan () (
     exit 1
   fi
 
-  for wpaconf in /boot/wpa_supplicant.conf /boot/firmware/wpa_supplicant.conf; do
-    if [ -e "$wpaconf" ]; then
-      echo "Ignoring network configuration: $wpaconf exists"
-      exit 0
-    fi
-  done
-
   if [ -n "$COUNTRY" ]; then
     set_wlan_country "$COUNTRY"
   fi
@@ -169,9 +162,8 @@ set_wlan () (
   cat <<- EOF > /etc/systemd/system/set-wlan.service
 		[Unit]
 		Description=Configure WLAN for rpi-imager
-		After=NetworkManager.service dhcpcd.service
+		After=NetworkManager.service
 		ConditionPathIsDirectory=|/run/wpa_supplicant
-		ConditionPathExists=|/run/dhcpcd.pid
 		[Service]
 		Type=oneshot
 		ExecStart=$SCRIPT
