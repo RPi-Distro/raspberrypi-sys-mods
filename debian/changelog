@@ -1,3 +1,15 @@
+raspberrypi-sys-mods (20230830) bookworm; urgency=medium
+
+  [ Serge Schneider ]
+  * Tidy up
+  * Skip PARTUUID fix if running under PINN
+  * Remove dhcpcd support
+
+  [ Stefan Wahren ]
+  * Don't try to improve Kernel randomness
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 30 Aug 2023 10:47:53 +0100
+
 raspberrypi-sys-mods (20230829) bookworm; urgency=medium
 
   * Add hook to fix Imager's hard-coded /boot paths in customization script
