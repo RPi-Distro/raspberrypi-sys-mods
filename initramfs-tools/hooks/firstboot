@@ -17,10 +17,6 @@ esac
 
 . /usr/share/initramfs-tools/hook-functions
 
-if ! ischroot; then
-  exit 0
-fi
-
 copy_exec /usr/bin/lsblk /bin
 copy_exec /usr/sbin/parted /bin
 copy_exec /usr/sbin/resize2fs /bin
