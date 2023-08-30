@@ -23,6 +23,9 @@ get_variables () {
 }
 
 fix_partuuid() {
+  if [ "$BOOT_PART_NUM" != "1" ]; then
+    return 0
+  fi
   mount -o remount,rw "$ROOT_PART_DEV"
   mount -o remount,rw "$BOOT_PART_DEV"
   DISKID="$(dd if=/dev/hwrng bs=4 count=1 status=none | od -An -tx4 | cut -c2-9)"
