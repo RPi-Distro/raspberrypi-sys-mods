@@ -1,3 +1,13 @@
+raspberrypi-sys-mods (20230918~rc1) bookworm; urgency=medium
+
+  [ Phil Elwell ]
+  * Relax the udev gpiomem name matching
+
+  [ Serge Schneider ]
+  * firstboot: Use local_device_setup to wait for and resolve the root device
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 18 Sep 2023 12:21:07 +0100
+
 raspberrypi-sys-mods (20230830) bookworm; urgency=medium
 
   [ Serge Schneider ]
