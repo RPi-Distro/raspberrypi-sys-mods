@@ -8,11 +8,15 @@ case "${1}" in
     ;;
 esac
 
-get_variables () {
-  ROOT_PART_DEV="$(resolve_device "$ROOT")"
-  ROOT_PART_NAME="$(lsblk -no kname "$ROOT_PART_DEV")"
+if ! grep -q firstboot /proc/cmdline; then
+  exit 0
+fi
 
-  ROOT_DEV_NAME="$(lsblk -no pkname "$ROOT_PART_DEV")"
+get_variables () {
+  local_device_setup "$ROOT" "root file system"
+  ROOT_PART_NAME="$(lsblk -no kname "$DEV")"
+
+  ROOT_DEV_NAME="$(lsblk -no pkname "$DEV")"
   ROOT_DEV="/dev/$ROOT_DEV_NAME"
 
   ROOT_PART_NUM=$(cat "/sys/block/$ROOT_DEV_NAME/$ROOT_PART_NAME/partition")
@@ -23,11 +27,11 @@ get_variables () {
 
 do_resize () {
   if ! parted -m "$ROOT_DEV" u s resizepart "$ROOT_PART_NUM" "$TARGET_END"; then
-    FAIL_REASON="Partition table resize of the root partition ($ROOT_PART_DEV) failed\n$FAIL_REASON"
+    FAIL_REASON="Partition table resize of the root partition ($DEV) failed\n$FAIL_REASON"
     return 1
   fi
 
-  resize2fs -f -p "$ROOT_PART_DEV"
+  resize2fs -f -p "$DEV"
   RET="$?"
   if [ "$RET" -ne 0 ]; then
     FAIL_REASON="Root partition resize failed\n$FAIL_REASON"
@@ -35,10 +39,6 @@ do_resize () {
 
   return "$RET"
 }
-
-if ! grep -q firstboot /proc/cmdline; then
-  exit 0
-fi
 
 . /scripts/functions
 . /scripts/local
