@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20230921~rc1) bookworm; urgency=medium
+
+  * firstboot: local_device_setup can't run with set -e
+
+ -- Serge Schneider <serge@raspberrypi.com>  Thu, 21 Sep 2023 12:14:16 +0100
+
 raspberrypi-sys-mods (20230918~rc1) bookworm; urgency=medium
 
   [ Phil Elwell ]
