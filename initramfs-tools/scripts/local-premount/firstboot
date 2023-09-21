@@ -13,7 +13,9 @@ if ! grep -q firstboot /proc/cmdline; then
 fi
 
 get_variables () {
+  set +e # This function does not work as intended with -e
   local_device_setup "$ROOT" "root file system"
+  set -e
   ROOT_PART_NAME="$(lsblk -no kname "$DEV")"
 
   ROOT_DEV_NAME="$(lsblk -no pkname "$DEV")"
