@@ -1,4 +1,4 @@
-raspberrypi-sys-mods (20230921~rc1) bookworm; urgency=medium
+raspberrypi-sys-mods (20230921) bookworm; urgency=medium
 
   * firstboot: local_device_setup can't run with set -e
 
