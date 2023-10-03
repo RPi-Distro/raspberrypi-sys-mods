@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20231003) bookworm; urgency=medium
+
+  * Add EXTERNALLY-MANAGED divert to update the message
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 03 Oct 2023 23:11:16 +0100
+
 raspberrypi-sys-mods (20230922) bookworm; urgency=medium
 
   * Fix initial resize on devices greater than 2TB
