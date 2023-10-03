@@ -16,9 +16,17 @@ set -e
 
 
 case "$1" in
-    purge|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    remove|abort-install|disappear)
+        dpkg-divert --package raspberrypi-sys-mods --remove --rename \
+            --divert /usr/lib/python3.11/EXTERNALLY-MANAGED.orig /usr/lib/python3.11/EXTERNALLY-MANAGED
         ;;
-    remove)
+    abort-upgrade)
+        if dpkg --compare-versions "$2" lt 20231003; then
+            dpkg-divert --package raspberrypi-sys-mods --remove --rename \
+                --divert /usr/lib/python3.11/EXTERNALLY-MANAGED.orig /usr/lib/python3.11/EXTERNALLY-MANAGED
+        fi
+        ;;
+    purge|upgrade|failed-upgrade)
         ;;
     *)
         echo "postrm called with unknown argument \`$1'" >&2
