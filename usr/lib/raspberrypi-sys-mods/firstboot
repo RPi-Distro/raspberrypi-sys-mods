@@ -80,9 +80,6 @@ apply_custom () {
 main () {
   get_variables
 
-  # Switch to dhcpcd here if Imager < v1.7.3 was used to generate firstrun.sh
-  fix_wpa > /dev/null 2>&1
-
   whiptail --infobox "Generating SSH keys..." 20 60
   regenerate_ssh_host_keys
 
