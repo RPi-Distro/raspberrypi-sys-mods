@@ -1,6 +1,6 @@
 [Unit]
 Description=Turn on SSH if /boot/ssh or /boot/firmware/ssh is present
-After=regenerate_ssh_host_keys.service boot.mount
+After=regenerate_ssh_host_keys.service boot-firmware.mount
 
 [Service]
 Type=oneshot
