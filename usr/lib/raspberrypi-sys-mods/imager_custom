@@ -95,13 +95,12 @@ set_wlan_country () (
 
 
 set_wlan () (
-  HIDDEN=0
+  HIDDEN="false"
   PLAIN=0
-  SCRIPT='/var/lib/raspberrypi-sys-mods/set-wlan'
   for arg in "$@"; do
     # shellcheck disable=SC2031
     if [ "$arg" = "-h" ] || [ "$arg" = "--hidden" ]; then
-      HIDDEN=1
+      HIDDEN="true"
     elif [ "$arg" = "-p" ] || [ "$arg" = "--plain" ]; then
       PLAIN=1
     elif [ -z "${SSID+set}" ]; then
@@ -124,52 +123,36 @@ set_wlan () (
     set_wlan_country "$COUNTRY"
   fi
 
-  # Replace ' with '\'' in SSID and PASS to support single-quote characters
-  SSID=$(printf '%s' "$SSID" | sed "s/'/'\\\\''/g")
-  PASS=$(printf '%s' "$PASS" | sed "s/'/'\\\\''/g")
-
-  mkdir -p "$(dirname "$SCRIPT")"
-  # shellcheck disable=SC2094
-  cat <<- EOF > "$SCRIPT"
-	#!/bin/sh
-	COUNTER=0
-	while [ "\$COUNTER" -lt 10 ]; do
-	  COUNTER=\$((COUNTER + 1))
-	  if raspi-config nonint do_wifi_ssid_passphrase  '$SSID' '$PASS' '$HIDDEN' '$PLAIN'; then
-	    break
-	  fi
-	  sleep 5
-	done
-	systemctl stop set-wlan.timer
-	systemctl disable set-wlan.timer
-	rm -f "\$0"
-	rm -f /etc/systemd/system/set-wlan.timer
-	rm -f /etc/systemd/system/set-wlan.service
-	rmdir --ignore-fail-on-non-empty '$(dirname "$SCRIPT")'
-	EOF
-  chmod 700 "$SCRIPT"
-
-  cat <<- EOF > /etc/systemd/system/set-wlan.timer
-		[Unit]
-		Description=Configure WLAN for rpi-imager
-		[Timer]
-		OnBootSec=1
-		OnUnitActiveSec=10
-		[Install]
-		WantedBy=timers.target
+  CONNFILE=/etc/NetworkManager/system-connections/preconfigured.nmconnection
+  UUID=$(uuid -v4)
+  cat <<- EOF >${CONNFILE}
+	[connection]
+	id=preconfigured
+	uuid=${UUID}
+	type=wifi
+	[wifi]
+	mode=infrastructure
+	ssid=${SSID}
+	hidden=${HIDDEN}
+	[ipv4]
+	method=auto
+	[ipv6]
+	addr-gen-mode=default
+	method=auto
+	[proxy]
 	EOF
 
-  cat <<- EOF > /etc/systemd/system/set-wlan.service
-		[Unit]
-		Description=Configure WLAN for rpi-imager
-		After=NetworkManager.service
-		ConditionPathIsDirectory=|/run/wpa_supplicant
-		[Service]
-		Type=oneshot
-		ExecStart=$SCRIPT
+  if [ ! -z "${PASS}" ]; then
+    cat <<- EOF >>${CONNFILE}
+	[wifi-security]
+	key-mgmt=wpa-psk
+	psk=${PASS}
 	EOF
-  ln -f -s /etc/systemd/system/set-wlan.timer \
-  /etc/systemd/system/timers.target.wants/set-wlan.timer
+  fi
+
+  # NetworkManager will ignore nmconnection files with incorrect permissions,
+  # to prevent Wi-Fi credentials accidentally being world-readable.
+  chmod 600 ${CONNFILE}
 )
 
 import_ssh_id () (
