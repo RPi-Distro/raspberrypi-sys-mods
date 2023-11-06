@@ -1,3 +1,4 @@
+SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
 SUBSYSTEM=="dma_heap", KERNEL=="system", PROGRAM="/bin/grep -q \"^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F]4[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]$$\" /proc/cpuinfo", SYMLINK+="dma_heap/vidbuf_cached", GOTO="dma_end"
 SUBSYSTEM=="dma_heap", KERNEL=="linux,cma", SYMLINK+="dma_heap/vidbuf_cached"
 LABEL="dma_end"
