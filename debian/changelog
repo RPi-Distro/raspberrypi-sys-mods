@@ -1,3 +1,22 @@
+raspberrypi-sys-mods (20231113) bookworm; urgency=medium
+
+  [ Renjaya Raga Zenta ]
+  * Remove fix_wpa call because it was removed (#80)
+
+  [ TM ]
+  * Fix mount name
+
+  [ Phil Elwell ]
+  * 99-com.rules: Improve serial matching on older Pis
+
+  [ David Turner ]
+  * Squash write to nmconnection file
+
+  [ Serge Schneider ]
+  * Refactor udev rules
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 13 Nov 2023 14:29:32 +0000
+
 raspberrypi-sys-mods (20231003) bookworm; urgency=medium
 
   * Add EXTERNALLY-MANAGED divert to update the message
