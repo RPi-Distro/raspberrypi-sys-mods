@@ -6,7 +6,7 @@ fi
 
 if [ -z "$FWLOC" ]; then
   for FWLOC in /boot /boot/firmware NOT_FOUND; do
-    if findmnt --fstab "$FWLOC" > /dev/null; then
+    if ( findmnt --fstab "$FWLOC" || findmnt "$FWLOC" ) > /dev/null; then
       break
     fi
   done
