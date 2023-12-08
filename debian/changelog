@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20231208) bookworm; urgency=medium
+
+  * d/c: Add uuid dependency
+
+ -- Serge Schneider <serge@raspberrypi.com>  Fri, 08 Dec 2023 07:24:19 +0000
+
 raspberrypi-sys-mods (20231127) bookworm; urgency=medium
 
   * get_fw_loc: add non-fstab findmnt check as a fallback
