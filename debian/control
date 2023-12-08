@@ -11,7 +11,7 @@ Vcs-Browser: https://github.com/RPi-Distro/raspberrypi-sys-mods
 Package: raspberrypi-sys-mods
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, systemd (>= 230), gettext-base,
- raspi-config (>= 20220809), parted, fdisk, whiptail
+ raspi-config (>= 20220809), parted, fdisk, whiptail, uuid
 Breaks: raspberrypi-ui-mods (<<1.20210706), dhcpcd5 (<<1:8.1.2-1+rpt2)
 Replaces: raspberrypi-ui-mods (<<1.20210706)
 Recommends: rfkill, rpi-eeprom, ssh-import-id, userconf-pi, python3,
