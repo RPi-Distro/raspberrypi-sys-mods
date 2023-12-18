@@ -5,11 +5,15 @@ if [ -r /etc/default/raspberrypi-sys-mods ]; then
 fi
 
 if [ -z "$FWLOC" ]; then
-  for FWLOC in /boot /boot/firmware NOT_FOUND; do
-    if ( findmnt --fstab "$FWLOC" || findmnt "$FWLOC" ) > /dev/null; then
-      break
-    fi
-  done
+  if dpkg --print-architecture | grep -q '^arm'; then
+    for FWLOC in /boot /boot/firmware NOT_FOUND; do
+      if ( findmnt --fstab "$FWLOC" || findmnt "$FWLOC" ) > /dev/null; then
+        break
+      fi
+    done
+  else
+    FWLOC=/boot
+  fi
 fi
 
 echo "$FWLOC"
