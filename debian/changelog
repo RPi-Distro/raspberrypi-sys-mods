@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20231218) bookworm; urgency=medium
+
+  * get_fw_loc: default to /boot on non-arm platforms
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 18 Dec 2023 10:52:26 +0000
+
 raspberrypi-sys-mods (20231208) bookworm; urgency=medium
 
   * d/c: Add uuid dependency
