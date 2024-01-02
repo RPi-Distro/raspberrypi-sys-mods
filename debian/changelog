@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20240102) bookworm; urgency=medium
+
+  * Set DPKG_DEB_THREADS_MAX=1 on devices with less than 512MB MemTotal
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 02 Jan 2024 14:12:05 +0000
+
 raspberrypi-sys-mods (20231218) bookworm; urgency=medium
 
   * get_fw_loc: default to /boot on non-arm platforms
