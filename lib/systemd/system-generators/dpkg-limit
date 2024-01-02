@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ $(awk '/MemTotal/{print $2; exit}' /proc/meminfo) -gt 524288 ]; then
+  exit 0
+fi
+
+mkdir -p "$1/packagekit.service.d/"
+cat << EOF > "$1/packagekit.service.d/dpkg-limit.conf"
+[Service]
+Environment="DPKG_DEB_THREADS_MAX=1"
+ExecStart=
+ExecStart=/usr/libexec/packagekitd --keep-environment
+EOF
