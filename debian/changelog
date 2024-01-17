@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20240117) bookworm; urgency=medium
+
+  * d/postinst: remove /boot symlinks
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 17 Jan 2024 18:27:23 +0000
+
 raspberrypi-sys-mods (20240102) bookworm; urgency=medium
 
   * Set DPKG_DEB_THREADS_MAX=1 on devices with less than 512MB MemTotal
