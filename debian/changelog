@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20240123) bookworm; urgency=medium
+
+  * d/postinst: remove rc.local drop-in
+    - https://github.com/RPi-Distro/repo/issues/361
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 23 Jan 2024 15:26:11 +0000
+
 raspberrypi-sys-mods (20240117) bookworm; urgency=medium
 
   * d/postinst: remove /boot symlinks
