@@ -11,6 +11,12 @@ case "${1}" in
         fi
       done
     fi
+    if dpkg --compare-versions "${2}" lt-nl "20240123"; then
+        if echo "0a7ac533bad591bb75bc114c1b000ee0  /etc/systemd/system/rc-local.service.d/ttyoutput.conf" | md5sum -c --status 2> /dev/null; then
+            rm -f /etc/systemd/system/rc-local.service.d/ttyoutput.conf
+            rmdir --ignore-fail-on-non-empty /etc/systemd/system/rc-local.service.d
+        fi
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
