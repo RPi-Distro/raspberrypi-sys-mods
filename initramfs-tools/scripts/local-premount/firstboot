@@ -36,6 +36,7 @@ do_resize () {
     return 1
   fi
 
+  wait_for_udev 10
   resize2fs -f -p "$DEV"
   RET="$?"
   if [ "$RET" -ne 0 ]; then
