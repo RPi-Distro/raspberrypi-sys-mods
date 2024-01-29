@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (20240129) bookworm; urgency=medium
+
+  * firstboot: call wait_for_udev after parted
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 29 Jan 2024 15:38:53 +0000
+
 raspberrypi-sys-mods (20240123) bookworm; urgency=medium
 
   * d/postinst: remove rc.local drop-in
