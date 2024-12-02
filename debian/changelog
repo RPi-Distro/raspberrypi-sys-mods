@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20241202) bookworm; urgency=medium
+
+  [ Richard Oliver ]
+  * Select/configure ondemand cpu governor (#93)
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 02 Dec 2024 10:28:00 +0000
+
 raspberrypi-sys-mods (20241111) bookworm; urgency=medium
 
   * Add IP.issue
