@@ -1,3 +1,14 @@
+raspberrypi-sys-mods (20250410) bookworm; urgency=medium
+
+  [ Tim Gover ]
+  * serial0: Workaround for removal of of_node in 6.12 kernel (#95)
+
+  [ Serge Schneider ]
+  * Remove old PolicyKit rule to revert to Udisks2's default policy
+  * Add PIO nodes to gpio group
+
+ -- Serge Schneider <serge@raspberrypi.com>  Thu, 10 Apr 2025 10:42:35 +0100
+
 raspberrypi-sys-mods (20241202) bookworm; urgency=medium
 
   [ Richard Oliver ]
