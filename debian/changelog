@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (20250414) bookworm; urgency=medium
+
+  [ Phil Elwell ]
+  * fixup! serial0: Workaround for removal of of_node in 6.12 kernel (#95)
+    (#97)
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 14 Apr 2025 12:28:57 +0100
+
 raspberrypi-sys-mods (20250410) bookworm; urgency=medium
 
   [ Tim Gover ]
