@@ -21,9 +21,9 @@ KERNEL=="ttyAMA[0-9]*|ttyS[0-9]*", PROGRAM="/bin/sh -c '\
             elif [ -e $$ALIASES/bluetooth ] && [ $$TTYNODE/bluetooth = $$(strings $$ALIASES/bluetooth) ]; then \
                 echo 1; \
             elif [ $$TTYNODE = $$(echo $$CONSOLENODE | sed -e 's/.*\\//\\/soc\\//' -e 's/serial@/serial@10/' ) ]; then \
-               echo 0; \
+                echo 0; \
             elif [ $$TTYNODE = $$(echo $$CONSOLENODE | sed 's/.*rp1\\/serial@/\\/soc\\/serial@1f000/' ) ]; then \
-               echo 0; \
+                echo 0; \
             else \
                 exit 1; \
             fi \
@@ -41,7 +41,7 @@ KERNEL=="ttyAMA[0-9]*|ttyS[0-9]*", PROGRAM="/bin/sh -c '\
 '", SYMLINK+="serial%c"
 
 ACTION=="add", SUBSYSTEM=="vtconsole", KERNEL=="vtcon1", RUN+="/bin/sh -c '\
-	if echo RPi-Sense FB | cmp -s /sys/class/graphics/fb0/name; then \
-		echo 0 > /sys$devpath/bind; \
-	fi; \
+        if echo RPi-Sense FB | cmp -s /sys/class/graphics/fb0/name; then \
+            echo 0 > /sys$devpath/bind; \
+        fi; \
 '"
