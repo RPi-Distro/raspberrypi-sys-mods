@@ -26,13 +26,13 @@ KERNEL=="ttyAMA[0-9]*|ttyS[0-9]*", PROGRAM="/bin/sh -c '\
             else \
                 exit 1; \
             fi \
-        elif [ $$TTYNODE = $$(strings $$ALIASES/serial0) ]; then \
+        elif [ -e $$ALIASES/serial0 ] && [ $$TTYNODE = $$(strings $$ALIASES/serial0) ]; then \
             echo 0; \
-        elif [ $$TTYNODE = $$(strings $$ALIASES/serial1) ]; then \
+        elif [ -e $$ALIASES/serial1 ] && [ $$TTYNODE = $$(strings $$ALIASES/serial1) ]; then \
             echo 1; \
-        elif [ $$TTYNODE = $$(strings $$ALIASES/uart0 | sed 's/.*rp1\\/serial@/\\/soc\\/serial@1f000/' ) ]; then \
+        elif [ -e $$ALIASES/uart0 ] && [ $$TTYNODE = $$(strings $$ALIASES/uart0 | sed 's/.*rp1\\/serial@/\\/soc\\/serial@1f000/' ) ]; then \
             echo 0; \
-        elif [ $$TTYNODE = $$(strings $$ALIASES/uart10 | sed 's/.*\\//\\/soc\\//' | sed 's/serial@/serial@10/' ) ]; then \
+        elif [ -e $$ALIASES/uart10 ] && [ $$TTYNODE = $$(strings $$ALIASES/uart10 | sed 's/.*\\//\\/soc\\//' | sed 's/serial@/serial@10/' ) ]; then \
             echo 0; \
         else \
             exit 1; \
