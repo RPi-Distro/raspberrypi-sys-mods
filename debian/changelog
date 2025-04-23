@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20250423) bookworm; urgency=medium
+
+  [ Andrew Scheller ]
+  * More serial fixes
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 23 Apr 2025 14:09:53 +0100
+
 raspberrypi-sys-mods (20250414) bookworm; urgency=medium
 
   [ Phil Elwell ]
