@@ -1,5 +1,4 @@
 etc
 etc.armhf/* etc
-lib
 usr
 initramfs-tools/ /usr/share/
