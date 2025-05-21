@@ -29,5 +29,3 @@ include /usr/share/dpkg/default.mk
 
 override_dh_installsystemd:
 	dh_installsystemd --name=regenerate_ssh_host_keys --no-enable --no-start
-	dh_installsystemd --name=rpi-display-backlight --no-start
-	dh_installsystemd --name=sshswitch --no-stop-on-upgrade
