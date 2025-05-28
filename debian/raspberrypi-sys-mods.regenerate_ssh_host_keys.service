@@ -1,11 +1,20 @@
 [Unit]
 Description=Regenerate SSH host keys
-Before=ssh.service
+Before=first-boot-complete.target ssh.service
+After=systemd-remount-fs.service
+Wants=first-boot-complete.target
+ConditionPathIsReadWrite=/etc
 ConditionFileIsExecutable=/usr/bin/ssh-keygen
+ConditionFirstBoot=yes
+DefaultDependencies=no
+Conflicts=shutdown.target
+Before=shutdown.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/lib/raspberrypi-sys-mods/regenerate_ssh_host_keys
+RemainAfterExit=yes
+ExecStartPre=/usr/bin/rm -f /etc/ssh/ssh_host_*_key*
+ExecStart=/usr/bin/ssh-keygen -A
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sysinit.target

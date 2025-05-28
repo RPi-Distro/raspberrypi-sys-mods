@@ -1,5 +1,0 @@
-#!/bin/sh -e
-
-rm -f /etc/ssh/ssh_host_*_key*
-ssh-keygen -A > /dev/null
-systemctl -q disable regenerate_ssh_host_keys
