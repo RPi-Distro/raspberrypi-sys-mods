@@ -49,10 +49,10 @@ do_resize () {
 . /scripts/functions
 . /scripts/local
 
-log_begin_msg "Resizing root filesystem...\n\nDepending on storage size and speed, this may take a while."
 
 get_variables
-if ! [ -b "${ROOT_DEV}5" ]; then
+if ! [ -b "${ROOT_DEV}5" ] && ! [ -b "${ROOT_DEV}p5" ] ; then
+  log_begin_msg "Resizing root filesystem...\n\nDepending on storage size and speed, this may take a while."
   do_resize
 else
   log_warning_msg "Resize skipped due to unexpected partition table"
