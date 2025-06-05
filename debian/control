@@ -5,7 +5,7 @@ Maintainer: Serge Schneider <serge@raspberrypi.com>
 Build-Depends: debhelper (>= 12)
 Standards-Version: 4.3.0
 Homepage: https://github.com/RPi-Distro/raspberrypi-sys-mods
-Vcs-Git: git://git@github.com:RPi-Distro/raspberrypi-sys-mods.git
+Vcs-Git: https://github.com/RPi-Distro/raspberrypi-sys-mods.git
 Vcs-Browser: https://github.com/RPi-Distro/raspberrypi-sys-mods
 
 Package: raspberrypi-sys-mods
