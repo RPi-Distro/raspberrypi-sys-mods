@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (20250605~bookworm) bookworm; urgency=medium
+
+  * d/c: fix Vcs-Git URL
+  * d/c: remove dhcpcd5 reference
+
+ -- Serge Schneider <serge@raspberrypi.com>  Thu, 05 Jun 2025 17:41:18 +0100
+
 raspberrypi-sys-mods (20250423) bookworm; urgency=medium
 
   [ Andrew Scheller ]
