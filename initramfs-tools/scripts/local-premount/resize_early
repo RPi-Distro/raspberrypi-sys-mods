@@ -2,13 +2,13 @@
 
 set -e
 
-case "${1}" in
+case "$1" in
   prereqs)
     exit 0
     ;;
 esac
 
-if ! grep -q firstboot /proc/cmdline; then
+if ! grep -q ' resize' /proc/cmdline; then
   exit 0
 fi
 
@@ -32,31 +32,31 @@ get_variables () {
 
 do_resize () {
   if ! parted -m "$ROOT_DEV" u s resizepart "$ROOT_PART_NUM" "$TARGET_END"; then
-    FAIL_REASON="Partition table resize of the root partition ($DEV) failed\n$FAIL_REASON"
     return 1
   fi
-
   wait_for_udev 10
-  resize2fs -f -p "$DEV"
-  RET="$?"
-  if [ "$RET" -ne 0 ]; then
-    FAIL_REASON="Root partition resize failed\n$FAIL_REASON"
-  fi
-
-  return "$RET"
+  resize2fs -f -p "$(resolve_device "$ROOT")"
 }
 
 . /scripts/functions
 . /scripts/local
 
-log_begin_msg "Resizing root filesystem...\n\nDepending on storage size and speed, this may take a while."
+log_begin_msg "Resizing rootfs..."
 
 get_variables
-if ! [ -b "${ROOT_DEV}5" ]; then
+if [ "$ROOT_PART_NUM" -eq 2 ]; then
   do_resize
 else
   log_warning_msg "Resize skipped due to unexpected partition table"
 fi
+
+unset ROOT_PART_NAME
+unset ROOT_DEV_NAME
+unset ROOT_DEV
+unset ROOT_PART_NUM
+unset ROOT_DEV_SIZE
+unset TARGET_END
+
 log_end_msg
 
 exit 0
