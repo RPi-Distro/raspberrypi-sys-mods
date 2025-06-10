@@ -1,3 +1,20 @@
+raspberrypi-sys-mods (1:20250627) trixie; urgency=medium
+
+  * Update gbp.conf for Trixie
+  * Fix file install paths
+  * Remove old tweaks
+  * Remove old systemd services
+  * Remove firstboot script
+  * Override appstream-metadata-missing-modalias-provide
+  * Add journald.conf.d/70-rpi-volatile-storage.conf to set the default
+    Storage option
+  * Rework regenerate_ssh_host_keys.service
+  * Rework resize scripts
+  * Move venv message for python 3.13
+  * Bump epoch in trixie to avoid versioning issues with bookworm
+
+ -- Serge Schneider <serge@raspberrypi.com>  Fri, 27 Jun 2025 17:01:42 +0100
+
 raspberrypi-sys-mods (20250605~bookworm) bookworm; urgency=medium
 
   * d/c: fix Vcs-Git URL
