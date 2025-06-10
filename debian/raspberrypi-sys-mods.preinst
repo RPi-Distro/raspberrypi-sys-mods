@@ -2,9 +2,9 @@
 
 set -e
 
-if [ upgrade != "$1" ] || dpkg --compare-versions "$2" lt 20231003; then
+if [ upgrade != "$1" ] || dpkg --compare-versions "$2" lt 1:20250627; then
     dpkg-divert --package raspberrypi-sys-mods --add --rename \
-        --divert /usr/lib/python3.11/EXTERNALLY-MANAGED.orig /usr/lib/python3.11/EXTERNALLY-MANAGED
+        --divert /usr/lib/python3.13/EXTERNALLY-MANAGED.orig /usr/lib/python3.13/EXTERNALLY-MANAGED
 fi
 
 #DEBHELPER#

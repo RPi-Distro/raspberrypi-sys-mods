@@ -18,12 +18,12 @@ set -e
 case "$1" in
     remove|abort-install|disappear)
         dpkg-divert --package raspberrypi-sys-mods --remove --rename \
-            --divert /usr/lib/python3.11/EXTERNALLY-MANAGED.orig /usr/lib/python3.11/EXTERNALLY-MANAGED
+            --divert /usr/lib/python3.13/EXTERNALLY-MANAGED.orig /usr/lib/python3.13/EXTERNALLY-MANAGED
         ;;
     abort-upgrade)
-        if dpkg --compare-versions "$2" lt 20231003; then
+        if dpkg --compare-versions "$2" lt 1:20250627; then
             dpkg-divert --package raspberrypi-sys-mods --remove --rename \
-                --divert /usr/lib/python3.11/EXTERNALLY-MANAGED.orig /usr/lib/python3.11/EXTERNALLY-MANAGED
+                --divert /usr/lib/python3.13/EXTERNALLY-MANAGED.orig /usr/lib/python3.13/EXTERNALLY-MANAGED
         fi
         ;;
     purge|upgrade|failed-upgrade)

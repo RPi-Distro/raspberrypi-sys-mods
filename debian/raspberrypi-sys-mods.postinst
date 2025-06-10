@@ -2,6 +2,10 @@
 
 case "${1}" in
   configure)
+    if dpkg --compare-versions "$2" lt-nl 1:20250627; then
+        dpkg-divert --package raspberrypi-sys-mods --remove --rename \
+            --divert /usr/lib/python3.11/EXTERNALLY-MANAGED.orig /usr/lib/python3.11/EXTERNALLY-MANAGED
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
