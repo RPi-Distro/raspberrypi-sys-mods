@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+case "${1}" in
+  prereqs)
+    echo "udev"
+    exit 0
+    ;;
+esac
+
+. /scripts/functions
+
+if grep -q ' watchdog_disarm=0' /proc/cmdline; then
+  exit 0
+fi
+
+log_begin_msg "Disarming watchdog..."
+
+if [ -c /dev/watchdog0 ]; then
+  echo -n 'V' > /dev/watchdog0
+else
+  log_warning_msg "Watchdog device not found"
+fi
+
+log_end_msg
+
+exit 0
