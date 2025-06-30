@@ -21,7 +21,7 @@ fi
 log_begin_msg "Fixing firstrun.sh..."
 
 mkdir -p /run/imager_fixup
-mount -o rw $(resolve_device "$BOOT_DEV") /run/imager_fixup
+mount -o rw "$(resolve_device "$BOOT_DEV")" /run/imager_fixup
 
 sed -i 's|/boot/|/boot/firmware/|g' /run/imager_fixup/cmdline.txt
 sed -n -i '/rm.*firstrun\.sh$/q;p' /run/imager_fixup/firstrun.sh
