@@ -1,3 +1,11 @@
+raspberrypi-sys-mods (1:20250630) trixie; urgency=medium
+
+  * initramfs: disarm watchdog if set
+  * Enable watchdog by default
+  * Shellcheck fix
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 30 Jun 2025 15:56:11 +0100
+
 raspberrypi-sys-mods (1:20250627) trixie; urgency=medium
 
   * Update gbp.conf for Trixie
