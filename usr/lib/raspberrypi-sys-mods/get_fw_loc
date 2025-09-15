@@ -18,7 +18,7 @@ if [ -z "$FWLOC" ]; then
     echo "WARNING: Firmware partition not found, searching for config.txt.."  >$2
     for FWLOC in /boot/firmware /boot NOT_FOUND; do
       if [ -f "$FWLOC/config.txt" ]; then
-	break
+        break
       fi
     done
   fi
