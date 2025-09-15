@@ -7,13 +7,13 @@ fi
 if [ -z "$FWLOC" ]; then
   if ! dpkg --print-architecture | grep -q '^arm'; then
     FWLOC=/boot
-    break
+  else
+    for FWLOC in /boot/firmware /boot NOT_FOUND; do
+      if ( findmnt --fstab "$FWLOC" || findmnt "$FWLOC" ) > /dev/null; then
+        break
+      fi
+    done
   fi
-  for FWLOC in /boot/firmware /boot NOT_FOUND; do
-    if ( findmnt --fstab "$FWLOC" || findmnt "$FWLOC" ) > /dev/null; then
-      break
-    fi
-  done
   if [ "$FWLOC" = "NOT_FOUND" ]; then
     echo "WARNING: Firmware partition not found, searching for config.txt.."  >$2
     for FWLOC in /boot/firmware /boot NOT_FOUND; do
