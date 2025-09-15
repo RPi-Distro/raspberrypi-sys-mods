@@ -1,6 +1,6 @@
 [Unit]
 Description=Regenerate SSH host keys
-Before=first-boot-complete.target ssh.service
+Before=first-boot-complete.target ssh.service sshd-keygen.service
 After=systemd-remount-fs.service
 Wants=first-boot-complete.target
 ConditionPathIsReadWrite=/etc
