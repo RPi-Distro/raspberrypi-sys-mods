@@ -1,3 +1,20 @@
+raspberrypi-sys-mods (1:20250919) trixie; urgency=medium
+
+  [ Serge Schneider ]
+  * regenerate_ssh_host_keys.service: run before sshd-keygen.service
+  * get_fw_loc: fix indentation
+  * get_fw_loc: fix typo
+  * 60-dma-heap.rules: simplify dma_heap/vidbuf_cached symlink rules
+  * systemd: lower volatile storage conf file priority
+  * Move partition resize and trim from initramfs to systemd
+  * Enable Multi-Gen LRU thrashing prevention
+  * systemd: lower watchdog conf file priority
+
+  [ Rob ]
+  * Update get_fw_loc (#101)
+
+ -- Serge Schneider <serge@raspberrypi.com>  Fri, 19 Sep 2025 18:05:49 +0100
+
 raspberrypi-sys-mods (1:20250630) trixie; urgency=medium
 
   * initramfs: disarm watchdog if set
