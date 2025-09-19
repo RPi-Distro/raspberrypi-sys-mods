@@ -1,0 +1,18 @@
+[Unit]
+Description=Grow and trim root filesystem on first boot
+Before=first-boot-complete.target fstrim.service
+After=systemd-remount-fs.service systemd-growfs-root.service
+Wants=first-boot-complete.target systemd-growfs-root.service fstrim.service
+ConditionFirstBoot=yes
+DefaultDependencies=no
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/true
+ExecStartPost=/usr/bin/systemctl disable %n
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sysinit.target

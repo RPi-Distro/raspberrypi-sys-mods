@@ -1,0 +1,71 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+  prereqs)
+    exit 0
+    ;;
+esac
+
+# shellcheck disable=SC1091
+. /scripts/functions
+
+if ! grep -q ' resize' /proc/cmdline; then
+  exit 0
+fi
+
+get_variables () {
+  if ! BOOT_PART_DEV=$(findmnt -n -o SOURCE -s -F "${rootmnt?}/etc/fstab" /boot/firmware); then
+    exit 0
+  fi
+
+  ROOT_DEV_NAME="$(lsblk -no pkname "$ROOT")"
+  ROOT_DEV="/dev/$ROOT_DEV_NAME"
+
+  ROOT_PART_NAME="$(lsblk -no kname "$ROOT")"
+  ROOT_PART_NUM=$(cat "/sys/block/$ROOT_DEV_NAME/$ROOT_PART_NAME/partition")
+}
+
+fix_diskid () {
+
+  OLD_DISKID="$(dd if="$ROOT_DEV" bs=4 count=1 skip=110 status=none | od -An -tx4 | cut -c2-9)"
+  dd if=/dev/hwrng "of=$ROOT_DEV" bs=4 seek=110 count=1 conv=notrunc status=none
+  DISKID="$(dd if="$ROOT_DEV" bs=4 count=1 skip=110 status=none | od -An -tx4 | cut -c2-9)"
+
+  sed -i "s/$OLD_DISKID/$DISKID/g" "${rootmnt?}/etc/fstab"
+  sed -i "s/$OLD_DISKID/$DISKID/" /run/new_diskid/cmdline.txt
+
+  log_success_msg "Disk ID set to $DISKID (was $OLD_DISKID)"
+}
+
+get_variables
+
+log_begin_msg "Setting new disk ID..."
+
+mkdir -p /run/new_diskid
+mount -o remount,rw "$ROOT" "${rootmnt?}/"
+mount -o rw "$(resolve_device "$BOOT_PART_DEV")" /run/new_diskid/
+
+if [ "$ROOT_PART_NUM" -eq 2 ]; then
+  fix_diskid
+else
+  log_warning_msg "Disk ID setup skipped due to unexpected partition table"
+fi
+
+sed -i 's| resize||g' /run/new_diskid/cmdline.txt
+umount /run/new_diskid
+mount -o remount,ro "$ROOT" "${rootmnt?}/"
+rmdir /run/new_diskid
+
+
+unset DISKID
+unset OLD_DISKID
+unset ROOT_PART_NUM
+unset ROOT_PART_NAME
+unset ROOT_DEV
+unset ROOT_DEV_NAME
+unset BOOT_PART_DEV
+log_end_msg
+
+exit 0

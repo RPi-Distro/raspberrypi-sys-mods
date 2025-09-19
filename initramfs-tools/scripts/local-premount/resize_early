@@ -34,14 +34,12 @@ do_resize () {
   if ! parted -m "$ROOT_DEV" u s resizepart "$ROOT_PART_NUM" "$TARGET_END"; then
     return 1
   fi
-  wait_for_udev 10
-  resize2fs -f -p "$(resolve_device "$ROOT")"
 }
 
 . /scripts/functions
 . /scripts/local
 
-log_begin_msg "Resizing rootfs..."
+log_begin_msg "Resizing root partition..."
 
 get_variables
 if [ "$ROOT_PART_NUM" -eq 2 ]; then
