@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20250922) trixie; urgency=medium
+
+  * Bump watchdog values
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 22 Sep 2025 10:07:59 +0100
+
 raspberrypi-sys-mods (1:20250919) trixie; urgency=medium
 
   [ Serge Schneider ]
