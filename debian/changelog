@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (1:20250929) trixie; urgency=medium
+
+  * Restore sshswitch service
+  * Restore imager_custom
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 29 Sep 2025 09:42:10 +0100
+
 raspberrypi-sys-mods (1:20250922) trixie; urgency=medium
 
   * Bump watchdog values
