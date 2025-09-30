@@ -1,3 +1,16 @@
+raspberrypi-sys-mods (20250930~bookworm) bookworm; urgency=medium
+
+  [ Rob ]
+  * Update get_fw_loc (#101)
+
+  [ Serge Schneider ]
+  * get_fw_loc: fix indentation
+  * Fixes for PINN
+  * 60-dma-heap.rules: simplify dma_heap/vidbuf_cached symlink rules
+  * get_fw_loc: fix typo
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 30 Sep 2025 08:15:00 +0100
+
 raspberrypi-sys-mods (20250605~bookworm) bookworm; urgency=medium
 
   * d/c: fix Vcs-Git URL
