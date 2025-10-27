@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20251027) trixie; urgency=medium
+
+  * Multi-Gen LRU: lower min_ttl_ms to 50
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 27 Oct 2025 10:09:49 +0000
+
 raspberrypi-sys-mods (1:20251014) trixie; urgency=medium
 
   * Multi-Gen LRU: lower min_ttl_ms to 100
