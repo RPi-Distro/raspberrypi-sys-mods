@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (1:20251028+1) trixie; urgency=medium
+
+  * Fix for pi-gen creating /var/lib/systemd/timesync/clock as a directory
+  * Set systemd-timesync save internal to 5m
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 28 Oct 2025 17:41:43 +0000
+
 raspberrypi-sys-mods (1:20251028) trixie; urgency=medium
 
   * Remove Multi-Gen LRU tweak altogether
