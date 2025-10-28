@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20251028) trixie; urgency=medium
+
+  * Remove Multi-Gen LRU tweak altogether
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 28 Oct 2025 11:39:24 +0000
+
 raspberrypi-sys-mods (1:20251027) trixie; urgency=medium
 
   * Multi-Gen LRU: lower min_ttl_ms to 50
