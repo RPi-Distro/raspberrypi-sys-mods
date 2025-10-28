@@ -6,6 +6,13 @@ case "${1}" in
         dpkg-divert --package raspberrypi-sys-mods --remove --rename \
             --divert /usr/lib/python3.11/EXTERNALLY-MANAGED.orig /usr/lib/python3.11/EXTERNALLY-MANAGED
     fi
+    if dpkg --compare-versions "$2" lt 1:20251028+1; then
+        if [ -d /var/lib/systemd/timesync/clock ]; then
+            rm -rf /var/lib/systemd/timesync/clock
+            touch /var/lib/systemd/timesync/clock
+            chown systemd-timesync:systemd-timesync /var/lib/systemd/timesync/clock
+        fi
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
