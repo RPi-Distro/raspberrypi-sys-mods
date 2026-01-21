@@ -1,0 +1,1 @@
+rm_conffile /etc/sudoers.d/010_pi-nopasswd 1:20251028+1

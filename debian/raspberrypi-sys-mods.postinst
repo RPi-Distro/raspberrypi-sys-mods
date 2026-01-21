@@ -13,6 +13,15 @@ case "${1}" in
             chown systemd-timesync:systemd-timesync /var/lib/systemd/timesync/clock
         fi
     fi
+    if dpkg --compare-versions "$2" le-nl 1:20251028+1; then
+        for old_nopasswd in /etc/sudoers.d/010_pi-nopasswd.dpkg-remove /etc/sudoers.d/010_pi-nopasswd.dpkg-backup; do
+          if [ -f "$old_nopasswd" ]; then
+              echo "Relinquishing package ownership of 010_pi-nopasswd..."
+              mv -v "$old_nopasswd" /etc/sudoers.d/010_pi-nopasswd
+              break
+          fi
+        done
+    fi
     ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
