@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20260121) trixie; urgency=medium
+
+  * Drop ownership of /etc/sudoers.d/010_pi-nopasswd
+
+ -- Serge Schneider <serge@raspberrypi.com>  Wed, 21 Jan 2026 13:24:44 +0000
+
 raspberrypi-sys-mods (1:20251028+1) trixie; urgency=medium
 
   * Fix for pi-gen creating /var/lib/systemd/timesync/clock as a directory
