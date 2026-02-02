@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20260202) trixie; urgency=medium
+
+  * Remove obsolete pico udev rules file
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 02 Feb 2026 15:15:11 +0000
+
 raspberrypi-sys-mods (1:20260121) trixie; urgency=medium
 
   * Drop ownership of /etc/sudoers.d/010_pi-nopasswd
