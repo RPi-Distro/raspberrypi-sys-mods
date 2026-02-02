@@ -1,1 +1,0 @@
-ATTRS{manufacturer}=="Raspberry Pi", MODE="660", GROUP="plugdev", TAG+="uaccess"
