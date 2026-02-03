@@ -1,0 +1,12 @@
+ACTION=="add", ATTRS{manufacturer}=="Raspberry Pi", ATTRS{product}=="USB Flash Drive", \
+	SUBSYSTEM=="scsi_disk", \
+	RUN+="/usr/bin/sh -c 'sleep 1 && udevadm trigger --action=change --subsystem-match=scsi_disk'"
+
+ACTION=="change", ATTRS{manufacturer}=="Raspberry Pi", ATTRS{product}=="USB Flash Drive", \
+	SUBSYSTEM=="scsi_disk", ENV{RPI_TRIM_SET}!="1", \
+	ENV{RPI_TRIM_SET}="1", ATTR{provisioning_mode}="unmap", \
+	RUN+="/usr/bin/sh -c 'udevadm trigger --action=change --subsystem-match=block --property-match=ID_USB_MODEL=USB_Flash_Drive'"
+
+ACTION=="change", ATTRS{manufacturer}=="Raspberry Pi", ATTRS{product}=="USB Flash Drive", \
+	KERNEL=="sd*[!0-9]", SUBSYSTEM=="block", \
+	ATTR{queue/discard_max_bytes}="1073741824"
