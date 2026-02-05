@@ -1,3 +1,10 @@
+raspberrypi-sys-mods (1:20260205) trixie; urgency=medium
+
+  [ Jonathan Bell ]
+  * udev: add ruleset to enable TRIM on Raspberry Pi flash drives
+
+ -- Serge Schneider <serge@raspberrypi.com>  Thu, 05 Feb 2026 06:37:11 +0000
+
 raspberrypi-sys-mods (1:20260202) trixie; urgency=medium
 
   * Remove obsolete pico udev rules file
