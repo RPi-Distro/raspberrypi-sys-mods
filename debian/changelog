@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20260210) trixie; urgency=medium
+
+  * Add udev rule for picotool
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 10 Feb 2026 14:05:58 +0000
+
 raspberrypi-sys-mods (1:20260205) trixie; urgency=medium
 
   [ Jonathan Bell ]
