@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20260224) trixie; urgency=medium
+
+  * Add i2c-brcmstb to initramfs
+
+ -- Serge Schneider <serge@raspberrypi.com>  Tue, 24 Feb 2026 16:52:51 +0000
+
 raspberrypi-sys-mods (1:20260210) trixie; urgency=medium
 
   * Add udev rule for picotool
