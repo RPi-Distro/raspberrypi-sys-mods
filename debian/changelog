@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20260315) trixie; urgency=medium
+
+  * Add needrestart conf file
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 16 Mar 2026 12:46:37 +0000
+
 raspberrypi-sys-mods (1:20260224) trixie; urgency=medium
 
   * Add i2c-brcmstb to initramfs
