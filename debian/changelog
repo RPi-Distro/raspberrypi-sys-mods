@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20260612) trixie; urgency=medium
+
+  * Restrict video group access to vcio gencmd/crypto nodes
+
+ -- Serge Schneider <serge@raspberrypi.com>  Fri, 12 Jun 2026 11:58:13 +0100
+
 raspberrypi-sys-mods (1:20260315) trixie; urgency=medium
 
   * Add needrestart conf file
