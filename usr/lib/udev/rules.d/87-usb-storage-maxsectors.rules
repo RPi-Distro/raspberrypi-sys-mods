@@ -1,0 +1,28 @@
+# Improve USB sequential throughput by increasing max transfer lengths
+
+# Exclusion filters
+ACTION!="add", GOTO="usb_max_sectors_end"
+SUBSYSTEM!="block", GOTO="usb_max_sectors_end"
+ENV{DEVTYPE}!="disk", GOTO="usb_max_sectors_end"
+
+# UAS devices have a higher default, ignore them
+ENV{ID_USB_DRIVER}!=="usb-storage", GOTO="usb_max_sectors_end"
+
+
+# Match Table: add target USB device's idVendor and idProduct here
+
+# Raspberry Pi multi-function USB device (Linux mass-storage composite gadget)
+ATTRS{idVendor}=="0a5c", ATTRS{idProduct}=="0104", GOTO="apply_max_sectors"
+
+# Raspberry Pi Compute Module 1 (Videocore mass-storage device)
+ATTRS{idVendor}=="0a5c", ATTRS{idProduct}=="0001", GOTO="apply_max_sectors"
+
+
+# Skip to end if no ID match
+GOTO="usb_max_sectors_end"
+
+# Increase to 2048 sectors (1M length)
+LABEL="apply_max_sectors"
+ATTR{device/max_sectors}="2048"
+
+LABEL="usb_max_sectors_end"
