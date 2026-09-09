@@ -11,7 +11,11 @@ esac
 
 . /scripts/functions
 
-if grep -q ' watchdog_disarm=0' /proc/cmdline; then
+# kernel_watchdog_timeout in config.txt makes the firmware leave the
+# hardware watchdog running and pass watchdog.open_timeout to the kernel,
+# which is an explicit request for continuous coverage until systemd takes
+# over. Leave it armed in that case, or if watchdog_disarm=0 is set.
+if grep -qE '(^| )(watchdog\.open_timeout=[^ ]*|watchdog_disarm=0)( |$)' /proc/cmdline; then
   exit 0
 fi
 
