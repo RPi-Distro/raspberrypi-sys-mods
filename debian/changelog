@@ -1,3 +1,14 @@
+raspberrypi-sys-mods (1:20260910) trixie; urgency=medium
+
+  [ Serge Schneider ]
+  * initramfs: keep watchdog armed if kernel_watchdog_timeout is set
+  * gbp.conf: use pios/ tag prefix
+
+  [ Jonathan Bell ]
+  * Fix slop-o in usb-storage match rule
+
+ -- Serge Schneider <serge@raspberrypi.com>  Thu, 10 Sep 2026 14:11:07 +0100
+
 raspberrypi-sys-mods (1:20260907) trixie; urgency=medium
 
   [ Jonathan Bell ]
