@@ -6,7 +6,7 @@ SUBSYSTEM!="block", GOTO="usb_max_sectors_end"
 ENV{DEVTYPE}!="disk", GOTO="usb_max_sectors_end"
 
 # UAS devices have a higher default, ignore them
-ENV{ID_USB_DRIVER}!=="usb-storage", GOTO="usb_max_sectors_end"
+ENV{ID_USB_DRIVER}!="usb-storage", GOTO="usb_max_sectors_end"
 
 
 # Match Table: add target USB device's idVendor and idProduct here
