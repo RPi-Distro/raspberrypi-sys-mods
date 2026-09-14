@@ -17,6 +17,6 @@ esac
 
 . /usr/share/initramfs-tools/hook-functions
 
-manual_add_modules i2c-brcmstb
+manual_add_modules i2c-brcmstb i2c-bcm2835
 
 exit 0
