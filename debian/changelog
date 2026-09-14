@@ -1,3 +1,9 @@
+raspberrypi-sys-mods (1:20260914) trixie; urgency=medium
+
+  * Add i2c-bcm2835 to initramfs
+
+ -- Serge Schneider <serge@raspberrypi.com>  Mon, 14 Sep 2026 17:47:15 +0100
+
 raspberrypi-sys-mods (1:20260910) trixie; urgency=medium
 
   [ Serge Schneider ]
