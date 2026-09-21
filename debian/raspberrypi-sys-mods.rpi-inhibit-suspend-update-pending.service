@@ -1,0 +1,11 @@
+[Unit]
+Description=Inhibit suspend while a bootloader EEPROM update is pending
+After=systemd-logind.service
+ConditionPathExists=/run/rpi-eeprom-update-pending
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/systemd-inhibit --what=sleep --mode=block \
+  --who="raspberrypi-sys-mods" \
+  --why="A bootloader EEPROM update is pending" \
+  sleep infinity

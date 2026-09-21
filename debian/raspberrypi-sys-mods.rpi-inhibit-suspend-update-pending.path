@@ -1,0 +1,8 @@
+[Unit]
+Description=Watch for a pending bootloader EEPROM update
+
+[Path]
+PathExists=/run/rpi-eeprom-update-pending
+
+[Install]
+WantedBy=multi-user.target
