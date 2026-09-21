@@ -1,0 +1,15 @@
+[Unit]
+Description=Inhibit suspend when the bootloader does not support suspend to RAM
+After=systemd-logind.service
+ConditionFirmware=device-tree-compatible(brcm,bcm2712)
+
+[Service]
+Type=exec
+ExecCondition=/bin/sh -c '[ "$$(od -An -tx1 -v /proc/device-tree/chosen/bootloader/suspend-to-ram 2>/dev/null | tr -d " ")" != 00000001 ]'
+ExecStart=/usr/bin/systemd-inhibit --what=sleep --mode=block \
+  --who="raspberrypi-sys-mods" \
+  --why="Suspend to RAM requires a newer bootloader" \
+  sleep infinity
+
+[Install]
+WantedBy=multi-user.target
