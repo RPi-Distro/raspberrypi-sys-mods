@@ -1,15 +1,13 @@
-#!/bin/bash
-ALIASES=/lib/modules/`uname -r`/modules.alias
+#!/bin/sh
+ALIASES=/lib/modules/$(uname -r)/modules.alias
 n=0
 while true; do
-    comp=OF_COMPATIBLE_${n}
-    comp=`echo ${!comp} | sed 's/.*,//'`
-    if [ "${comp}" == "" ]; then
-        break
-    fi
-    if grep -q "alias ${SUBSYSTEM}:${comp} " $ALIASES; then
+    comp=$(printenv "OF_COMPATIBLE_${n}")
+    comp=${comp##*,}
+    [ -z "$comp" ] && break
+    if grep -q "alias ${SUBSYSTEM}:${comp} " "$ALIASES"; then
         modprobe "${SUBSYSTEM}:${comp}" && exit 0
     fi
-    let n="$n + 1"
+    n=$((n + 1))
 done
 modprobe "${MODALIAS}" || modprobe "of:N${OF_NAME}T<NULL>C${OF_COMPATIBLE_0}"
