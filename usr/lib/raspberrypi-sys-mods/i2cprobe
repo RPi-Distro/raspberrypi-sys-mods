@@ -2,13 +2,12 @@
 ALIASES=/lib/modules/$(uname -r)/modules.alias
 n=0
 while true; do
-	comp=$(printenv "OF_COMPATIBLE_${n}")
-	comp=${comp##*,}
-	[ -z "$comp" ] && break
-	
-	if grep -q "alias ${SUBSYSTEM}:${comp} " "$ALIASES"; then
-		modprobe "${SUBSYSTEM}:${comp}" && exit 0
-	fi
-	n=$((n + 1))
+    comp=$(printenv "OF_COMPATIBLE_${n}")
+    comp=${comp##*,}
+    [ -z "$comp" ] && break
+    if grep -q "alias ${SUBSYSTEM}:${comp} " "$ALIASES"; then
+        modprobe "${SUBSYSTEM}:${comp}" && exit 0
+    fi
+    n=$((n + 1))
 done
 modprobe "${MODALIAS}" || modprobe "of:N${OF_NAME}T<NULL>C${OF_COMPATIBLE_0}"
