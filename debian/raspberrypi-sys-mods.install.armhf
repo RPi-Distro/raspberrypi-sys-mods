@@ -1,4 +1,5 @@
 etc
 etc.armhf/* etc
+usr.armhf/* usr
 usr
 initramfs-tools/ /usr/share/
