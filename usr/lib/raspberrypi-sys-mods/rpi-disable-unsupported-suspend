@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# The bootloader sets chosen/bootloader/suspend-to-ram to 1 if it supports
+# suspend to RAM
+SUSPEND_PROP=/proc/device-tree/chosen/bootloader/suspend-to-ram
+if [ "$(od -An -tx1 -v "$SUSPEND_PROP" 2>/dev/null | tr -d ' \n')" = 00000001 ]; then
+  exit 0
+fi
+
+mkdir -p /run/systemd/sleep.conf.d
+cat << CONF > /run/systemd/sleep.conf.d/raspberrypi-no-suspend.conf
+[Sleep]
+AllowSuspend=no
+CONF

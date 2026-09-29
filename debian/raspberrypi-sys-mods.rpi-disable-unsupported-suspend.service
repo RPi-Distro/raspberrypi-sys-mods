@@ -1,0 +1,12 @@
+[Unit]
+Description=Disable suspend if the bootloader does not support it
+ConditionFirmware=device-tree-compatible(brcm,bcm2712)
+DefaultDependencies=no
+Before=systemd-logind.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/raspberrypi-sys-mods/rpi-disable-unsupported-suspend
+
+[Install]
+WantedBy=sysinit.target
