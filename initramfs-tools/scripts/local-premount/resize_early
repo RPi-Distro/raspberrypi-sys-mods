@@ -30,10 +30,33 @@ get_variables () {
   fi
 }
 
+# parted regenerates the MBR disk ID if the boot code is empty, which would
+# break root=PARTUUID=, so keep it across the resize.
+save_diskid () {
+  dd if="$ROOT_DEV" of=/run/diskid.orig bs=4 count=1 skip=110 status=none
+  DISKID_ORIG="$(od -An -tx4 < /run/diskid.orig | tr -d ' \n')"
+}
+
+restore_diskid () {
+  DISKID_NOW="$(dd if="$ROOT_DEV" bs=4 count=1 skip=110 status=none | od -An -tx4 | tr -d ' \n')"
+  if [ "$DISKID_NOW" != "$DISKID_ORIG" ]; then
+    dd if=/run/diskid.orig "of=$ROOT_DEV" bs=4 count=1 seek=110 conv=notrunc status=none
+    log_warning_msg "parted regenerated the disk ID; restored $DISKID_ORIG"
+    blockdev --rereadpt "$ROOT_DEV" || log_warning_msg "could not re-read the partition table"
+    udevadm settle || log_warning_msg "udevadm settle failed after re-reading the partition table"
+  fi
+  rm -f /run/diskid.orig
+  unset DISKID_ORIG
+  unset DISKID_NOW
+}
+
 do_resize () {
+  save_diskid
   if ! parted -m "$ROOT_DEV" u s resizepart "$ROOT_PART_NUM" "$TARGET_END"; then
+    restore_diskid
     return 1
   fi
+  restore_diskid
 }
 
 . /scripts/functions
