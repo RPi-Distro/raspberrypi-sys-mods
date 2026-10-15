@@ -1,0 +1,4 @@
+# 71-seat.rules makes every DRM card a seat master, so the render-only v3d GPU
+# on Pi 4/5 marks seat0 graphical before the display controller (vc4) is up,
+# and lightdm starts with nothing to drive. Leave seat mastership to vc4.
+SUBSYSTEM=="drm", ENV{DEVTYPE}=="drm_minor", DRIVERS=="v3d", TAG-="master-of-seat"
