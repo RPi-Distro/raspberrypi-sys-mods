@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# POSIX helper script to identify serial port mapping
+
+# udev passes %k (kernel name) as the first argument to the script
+KERNEL_NAME="$1"
+ALIASES='/proc/device-tree/aliases'
+
+# Parse the device path and normalize the soc base addresses
+TTYNODE=$(readlink "/sys/class/tty/$KERNEL_NAME/device" | sed \
+	-e 's|.*/|/soc/serial@|' \
+	-e 's/\..*//' \
+	-e 's/@\(20\|3f\|fe\)/@7e/')
+
+if [ -e "$ALIASES/console" ]; then
+	CONSOLENODE=$(strings "$ALIASES/console")
+	if [ "$TTYNODE" = "$CONSOLENODE" ]; then
+		echo 0
+	elif [ -e "$ALIASES/bluetooth" ] && [ "$TTYNODE/bluetooth" = "$(strings "$ALIASES/bluetooth")" ]; then
+		echo 1
+	elif [ "$TTYNODE" = "$(echo "$CONSOLENODE" | sed -e 's|.*/|/soc/|' -e 's/serial@/serial@10/')" ]; then
+		echo 0
+	elif [ "$TTYNODE" = "$(echo "$CONSOLENODE" | sed 's|.*rp1/serial@|/soc/serial@1f000|')" ]; then
+		echo 0
+	else
+		exit 1
+	fi
+elif [ -e "$ALIASES/serial0" ] && [ "$TTYNODE" = "$(strings "$ALIASES/serial0")" ]; then
+	echo 0
+elif [ -e "$ALIASES/serial1" ] && [ "$TTYNODE" = "$(strings "$ALIASES/serial1")" ]; then
+	echo 1
+elif [ -e "$ALIASES/uart0" ] && [ "$TTYNODE" = "$(strings "$ALIASES/uart0" | sed 's|.*rp1/serial@|/soc/serial@1f000|')" ]; then
+	echo 0
+elif [ -e "$ALIASES/uart10" ] && [ "$TTYNODE" = "$(strings "$ALIASES/uart10" | sed -e 's|.*/|/soc/|' -e 's/serial@/serial@10/')" ]; then
+	echo 0
+else
+	exit 1
+fi
+
